@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Form with Google Sheets Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { 
+            padding: 10px 15px; 
+            background: #4285F4; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            margin-top: 10px;
+        }
+        button:hover { background: #3367D6; }
+        .record-selector { margin-bottom: 20px; }
+        select { width: 100%; padding: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Contact Information</h1>
+    
+    <div class="record-selector" id="recordSelectorContainer" style="display: none;">
+        <label for="records">Select a record:</label>
+        <select id="records">
+            <option value="">-- Select --</option>
+        </select>
+    </div>
+    
+    <form id="contactForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone">
+        </div>
+    </form>
+
+    <script>
+        // Replace with your Apps Script Web App URL
+        const scriptUrl = 'YOUR_APPS_SCRIPT_URL';
+        
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch(scriptUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.records && data.records.length > 0) {
+                        const selector = document.getElementById('records');
+                        const container = document.getElementById('recordSelectorContainer');
+                        
+                        // Show selector if we have multiple records
+                        if (data.records.length > 1) {
+                            container.style.display = 'block';
+                            
+                            // Populate dropdown
+                            data.records.forEach((record, index) => {
+                                const option = document.createElement('option');
+                                option.value = index;
+                                option.textContent = record.name || `Record ${index + 1}`;
+                                selector.appendChild(option);
+                            });
+                            
+                            // Add change handler
+                            selector.addEventListener('change', function() {
+                                if (this.value !== "") {
+                                    fillForm(data.records[this.value]);
+                                }
+                            });
+                        }
+                        
+                        // Fill form with first record by default
+                        fillForm(data.records[0]);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    alert('Failed to load data. Please try again later.');
+                });
+        });
+        
+        function fillForm(record) {
+            document.getElementById('name').value = record.name || '';
+            document.getElementById('email').value = record.email || '';
+            document.getElementById('phone').value = record.phone || '';
+        }
+    </script>
+</body>
+</html>
