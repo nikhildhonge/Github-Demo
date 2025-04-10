@@ -1031,25 +1031,39 @@
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                if (data.status === "error") throw new Error(data.message);
-                alert(`Member ${formData.fullname} added successfully!`);
-                memberForm.reset();
-                hideModal();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error: ' + error.message);
-            })
-            .finally(() => {
-                saveMember.disabled = false;
-                saveMember.textContent = 'Save Member';
-            });
-        });
+           .then(response => {
+    // First check if the response is a redirect
+    if (response.redirected) {
+        // Google Apps Script sometimes redirects
+        window.location.href = response.url;
+        return;
+    }
+    
+    // Then check response status
+    if (!response.ok && response.status !== 200) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+})
+.then(data => {
+    if (!data) return; // Handled redirect case
+    
+    if (data.status === "error") {
+        throw new Error(data.message || "Unknown server error");
+    }
+    
+    alert(`Member ${formData.fullname} added successfully!`);
+    memberForm.reset();
+    hideModal();
+})
+.catch(error => {
+    console.error('Error:', error);
+    alert('Error: ' + error.message);
+})
+.finally(() => {
+    saveMember.disabled = false;
+    saveMember.textContent = 'Save Member';
+});
 
         // Set today's date as default for join date
         //document.getElementById('memberJoinDate').valueAsDate = new Date();
