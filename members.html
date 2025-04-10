@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orange & White Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Bahnschrift;
+            font-size: small;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #ff8c42; /* Light orange */
+            color: white;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sidebar-toggle {
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: white;
+            background: rgba(255,255,255,0.2);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .user-menu {
+            position: relative;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.3s;
+            background: rgba(255,255,255,0.2);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-icon:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.3);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 0.5rem 0;
+            display: none;
+            z-index: 10;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 0.8rem 1rem;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #fff5f0;
+            color: #ff8c42;
+        }
+
+        .dropdown-menu i {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
+            color: #ff8c42;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #f0f0f0;
+            margin: 0.3rem 0;
+        }
+
+        .logout-btn {
+            color: #ff8c42 !important;
+            font-weight: bold;
+        }
+
+        /* Main content area */
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            padding-bottom: 60px; /* Space for fixed footer */
+        }
+
+        /* Sidebar styles - always visible */
+        .sidebar {
+            background-color: white;
+            color: #333;
+            width: 250px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #ff8c42;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #ff8c42;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar-menu a {
+            color: #555;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.7rem 0.8rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: #fff5f0;
+            color: #ff8c42;
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+            color: #ff8c42;
+        }
+
+        /* Content area */
+        .content {
+            flex: 1;
+            padding: 2rem;
+            background-color: #f9f9f9;
+            overflow-y: auto;
+        }
+
+        /* Page header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            color: #ff8c42;
+            margin: 0;
+        }
+
+        .add-member-btn {
+            background-color: #ff8c42;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(255, 140, 66, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .add-member-btn:hover {
+            background-color: #e07d3a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 140, 66, 0.3);
+        }
+
+        /* Members table */
+        .members-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .members-table th, .members-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .members-table th {
+            background-color: #fff5f0;
+            color: #ff8c42;
+            font-weight: bold;
+        }
+
+        .members-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .members-table tr:hover {
+            background-color: #fffaf5;
+        }
+
+        .member-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: none;
+        }
+
+        .edit-btn {
+            color: #3498db;
+        }
+
+        .delete-btn {
+            color: #e74c3c;
+        }
+
+        .view-btn {
+            color: #2ecc71;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-active {
+            background-color: #e8f8f0;
+            color: #2ecc71;
+        }
+
+        .status-inactive {
+            background-color: #fef0f0;
+            color: #e74c3c;
+        }
+
+        /* Stats cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 4px solid #ff8c42;
+        }
+
+        .stat-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff8c42;
+        }
+
+        /* Fixed Footer styles */
+        .footer {
+            background-color: white;
+            color: #666;
+            text-align: center;
+            padding: 0.8rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #e0e0e0;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+            z-index: 90;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 0.3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: #ff8c42;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 80%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #ff8c42;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #ff8c42;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #ff8c42;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: white;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.8rem center;
+            background-size: 1rem;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #ff8c42;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #ff8c42;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #e07d3a;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #eee;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #ddd;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 220px;
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -250px;
+                top: 60px;
+                bottom: 60px;
+                z-index: 90;
+                transition: left 0.3s;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+
+            .members-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .modal-container {
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 1.1rem;
+            }
+            
+            .logo-img {
+                height: 32px;
+                width: 32px;
+            }
+            
+            .sidebar-toggle, .user-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1.1rem;
+            }
+            
+            .footer {
+                height: 50px;
+                padding: 0.5rem;
+            }
+            
+            .footer-links {
+                gap: 0.7rem;
+            }
+            
+            .copyright {
+                font-size: 0.7rem;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-container {
+                width: 95%;
+                margin: 0 auto;
+            }
+            
+            .modal-body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo-container">
+                <!-- Your rounded logo image -->
+                <img src="https://i.pinimg.com/736x/ee/b1/e2/eeb1e236298229c4f2fa1e15b09bc108.jpg" alt="Logo" class="logo-img">
+                <div class="logo-text">OrangeDash</div>
+            </div>
+        </div>
+        
+        <div class="user-menu">
+            <div class="user-icon" id="userIcon">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#"><i class="fas fa-user"></i> Profile</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar - always present but hidden on mobile -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">Menu</div>
+            <ul class="sidebar-menu">
+                <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="#"><i class="fas fa-file-alt"></i> Reports</a></li>
+                <li><a href="#"><i class="fas fa-calendar"></i> Calendar</a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> Messages</a></li>
+                <li><a href="#" class="active"><i class="fas fa-users"></i> Members</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> Help Center</a></li>
+            </ul>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content">
+            <!-- Members Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Members Management</h1>
+                <button class="add-member-btn" id="addMemberBtn">
+                    <i class="fas fa-plus"></i> Add New Member
+                </button>
+            </div>
+
+            <!-- Members Stats -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-title">Total Members</div>
+                    <div class="stat-value">42</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Active Members</div>
+                    <div class="stat-value">36</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">New This Month</div>
+                    <div class="stat-value">8</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Inactive Members</div>
+                    <div class="stat-value">6</div>
+                </div>
+            </div>
+
+            <!-- Members Table -->
+            <table class="members-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Joined</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#001</td>
+                        <td>John Doe</td>
+                        <td>john@example.com</td>
+                        <td>Admin</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>Jan 12, 2023</td>
+                        <td>
+                            <div class="member-actions">
+                                <button class="action-btn view-btn" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn edit-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#002</td>
+                        <td>Jane Smith</td>
+                        <td>jane@example.com</td>
+                        <td>Manager</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>Feb 3, 2023</td>
+                        <td>
+                            <div class="member-actions">
+                                <button class="action-btn view-btn" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn edit-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#003</td>
+                        <td>Robert Johnson</td>
+                        <td>robert@example.com</td>
+                        <td>Developer</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>Mar 15, 2023</td>
+                        <td>
+                            <div class="member-actions">
+                                <button class="action-btn view-btn" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn edit-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#004</td>
+                        <td>Emily Davis</td>
+                        <td>emily@example.com</td>
+                        <td>Designer</td>
+                        <td><span class="status-badge status-inactive">Inactive</span></td>
+                        <td>Apr 22, 2023</td>
+                        <td>
+                            <div class="member-actions">
+                                <button class="action-btn view-btn" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn edit-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#005</td>
+                        <td>Michael Wilson</td>
+                        <td>michael@example.com</td>
+                        <td>Analyst</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>May 5, 2023</td>
+                        <td>
+                            <div class="member-actions">
+                                <button class="action-btn view-btn" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="action-btn edit-btn" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn delete-btn" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <!-- Modal for Add New Member -->
+    <div class="modal-overlay" id="addMemberModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Member</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="memberForm">
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">First Name ( प्रथम नाम )</label>
+                        <input type="text" id="firstName" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">Last Name ( सरनेम )</label>
+                        <input type="text" id="lastName" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobile" class="form-label">Mobile ( मोबाइल नंबर )</label>
+                        <input type="email" id="mobile" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email ( ईमेल पता )</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="role" class="form-label">Role ( पदनाम )</label>
+                        <select id="role" class="form-select" required>
+                            <option value="">Select a role</option>
+                            <option value="Adhyaksha"> Adhyaksha ( अध्यक्ष ) </option>
+                            <option value="Upadhyaksha"> Upadhyaksha ( उपाध्यक्ष ) </option>
+                            <option value="Koshadhyaksha"> Koshadhyaksha ( कोषाध्यक्ष ) </option>
+                            <option value="Sadasya"> Sadasya ( सदस्य ) </option>
+                        </select>
+                    </div>
+                    <!--
+                    <div class="form-group">
+                        <label for="memberStatus" class="form-label">Status</label>
+                        <select id="memberStatus" class="form-select" required>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberJoinDate" class="form-label">Join Date</label>
+                        <input type="date" id="memberJoinDate" class="form-control" required>
+                    </div>
+                    -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelAddMember">Cancel</button>
+                        <button type="button" id="btn-saveMember" class="btn btn-primary">Add Member</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed Footer -->
+    <footer class="footer">
+        <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+        <p class="copyright">&copy; 2023 OrangeDash. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Toggle dropdown menu
+        document.getElementById('userIcon').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('dropdownMenu').classList.toggle('active');
+        });
+
+        // Toggle sidebar on mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Close dropdown when clicking elsewhere
+        document.addEventListener('click', function() {
+            document.getElementById('dropdownMenu').classList.remove('active');
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        document.getElementById('dropdownMenu').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Sample action buttons functionality
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const memberName = this.closest('tr').querySelector('td:nth-child(2)').textContent;
+                alert(`Viewing details for ${memberName}`);
+            });
+        });
+
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const memberName = this.closest('tr').querySelector('td:nth-child(2)').textContent;
+                alert(`Editing member ${memberName}`);
+            });
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const memberName = this.closest('tr').querySelector('td:nth-child(2)').textContent;
+                if(confirm(`Are you sure you want to delete ${memberName}?`)) {
+                    alert(`${memberName} deleted successfully`);
+                    // In a real application, this would remove the row from the table
+                }
+            });
+        });
+
+        // Modal functionality
+        const addMemberModal = document.getElementById('addMemberModal');
+        const addMemberBtn = document.getElementById('addMemberBtn');
+        const closeModalBtn = document.getElementById('closeModal');
+        const cancelAddMemberBtn = document.getElementById('cancelAddMember');
+        const memberForm = document.getElementById('memberForm');
+        const saveMember = document.getElementById('btn-saveMember');
+
+        // Show modal
+        addMemberBtn.addEventListener('click', function() {
+            addMemberModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+        });
+
+        // Hide modal
+        function hideModal() {
+            addMemberModal.classList.remove('active');
+            document.body.style.overflow = ''; // Re-enable scrolling
+        }
+
+        closeModalBtn.addEventListener('click', hideModal);
+        cancelAddMemberBtn.addEventListener('click', hideModal);
+
+        // Close modal when clicking outside
+        addMemberModal.addEventListener('click', function(e) {
+            if (e.target === addMemberModal) {
+                hideModal();
+            }
+        });
+
+        saveMember.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            if (!firstName.value || !lastName.value || !mobile.value) {
+                alert('First name, last name, and mobile are required');
+                return;
+            }
+            
+            // Disable button during submission
+            saveMember.disabled = true;
+            saveMember.textContent = 'Saving...';
+            
+            const today = new Date();
+            const formattedDate = today.getDate().toString().padStart(2, '0') + '/' +
+                                (today.getMonth() + 1).toString().padStart(2, '0') + '/' + today.getFullYear();
+            
+            const formData = {
+                firstName: firstName.value.trim(),
+                lastName: lastName.value.trim(),
+                fullName: firstName.value.trim() + ' ' + lastName.value.trim(),
+                mobile: mobile.value.trim(),
+                email: email.value.trim(),
+                role: role.value,
+                joinDate: formattedDate
+            };
+            
+            fetch('https://script.google.com/macros/s/AKfycbz2Dcq28o3NEUTnDBklm0QuTMONwUqIXAuOt0_v9NnmjctfAeS0YutIl9gsIV8ZwJtm/exec', {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === "error") throw new Error(data.message);
+                alert(`Member ${formData.fullname} added successfully!`);
+                memberForm.reset();
+                hideModal();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            })
+            .finally(() => {
+                saveMember.disabled = false;
+                saveMember.textContent = 'Save Member';
+            });
+        });
+
+        // Set today's date as default for join date
+        //document.getElementById('memberJoinDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>
