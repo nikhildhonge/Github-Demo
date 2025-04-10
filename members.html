@@ -1024,9 +1024,9 @@
             fetch('https://script.google.com/macros/s/AKfycbz2Dcq28o3NEUTnDBklm0QuTMONwUqIXAuOt0_v9NnmjctfAeS0YutIl9gsIV8ZwJtm/exec', {
                 method: 'POST',
                 body: JSON.stringify(formData),
-                mode: 'no-cors', // This enables CORS properly
-                cache: 'no-cache',
-                credentials: 'omit', 
+              mode: 'cors', // Changed from 'no-cors' to 'cors'
+            cache: 'no-cache',
+            redirect: 'follow', // Important for Google Apps Script
                 headers: {
                     'Content-Type': 'application/json'
                 }
