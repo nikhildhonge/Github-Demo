@@ -273,35 +273,38 @@
  }
 
  /* Members table */
- .members-table {
-     width: 100%;
-     border-collapse: collapse;
-     background-color: white;
-     border-radius: 10px;
-     overflow: hidden;
-     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
- }
+ /* Members table */
+.members-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0; /* Light outer border */
+}
 
- .members-table th,
- .members-table td {
-     padding: 1rem;
-     text-align: left;
-     border-bottom: 1px solid #f0f0f0;
- }
+.members-table th,
+.members-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
 
- .members-table th {
-     background-color: #fff5f0;
-     color: #ff8c42;
-     font-weight: bold;
- }
+.members-table th {
+    background-color: #fff5f0;
+    color: #ff8c42;
+    font-weight: bold;
+}
 
- .members-table tr:last-child td {
-     border-bottom: none;
- }
+.members-table tr:last-child td {
+    border-bottom: none;
+}
 
- .members-table tr:hover {
-     background-color: #fffaf5;
- }
+.members-table tr:hover {
+    background-color: #fffaf5;
+}
+
 
  .member-actions {
      display: flex;
