@@ -768,7 +768,7 @@
             </div>
             <div class="logo-container">
                 <!-- Your rounded logo image -->
-                <img src="C:\BackUps\Orange\Trust Project\Hanumanji.png" alt="Logo" class="logo-img" height="60"
+                <img src="Hanumanji.png" alt="Logo" class="logo-img" height="60"
                     width="80">
                 <div class="logo-text">
                     <div class="main-heading">जय हनुमान चॅरिटेबल ट्रस्ट</div>
@@ -1044,7 +1044,7 @@
                 formData.lastUpdatedDate = formattedDate;
             }
 
-            const response = await fetch(scriptUrl, {
+            const response = await fetch(scriptUrl + '?sheet=Sheet2', {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 mode: "no-cors",  // No-cors will not let you read the response, but it still sends the request
