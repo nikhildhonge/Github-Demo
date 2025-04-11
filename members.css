@@ -58,70 +58,39 @@
  }
 
  .logo-container {
-     display: flex;
-     align-items: center;
-     gap: 10px;
-     padding: 10px;
-     flex-wrap: wrap;
- }
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    flex-wrap: nowrap;
+}
 
- .logo-img {
-     height: 60px;
-     width: 80px;
-     object-fit: contain;
- }
+.logo-img {
+    height: 60px;
+    width: 80px;
+    object-fit: contain;
+}
 
- .logo-text {
-     display: flex;
-     flex-direction: column;
-     line-height: 1.2;
-     margin-left: 10px;
-     color: white;
-     gap: 6px;
-     flex: 1;
-     min-width: 200px;
- }
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    margin-left: 10px;
+    color: white;
+    gap: 4px;
+}
 
- .logo-text .main-heading {
-     font-size: 18px;
-     font-weight: bold;
-     text-align: left;
- }
+.logo-text .main-heading {
+    font-size: 18px;
+    font-weight: bold;
+}
 
- .logo-text .subheading {
-     font-size: 12px;
-     font-weight: 400;
-     color: #f0f0f0;
-     text-align: left;
- }
-
- /* Responsive styles */
- @media (max-width: 600px) {
-     .logo-container {
-         flex-direction: column;
-         align-items: center;
-         text-align: center;
-     }
-
-     .logo-img {
-         height: 50px;
-         width: 70px;
-     }
-
-     .logo-text {
-         margin-left: 0;
-         align-items: center;
-     }
-
-     .logo-text .main-heading {
-         font-size: 16px;
-     }
-
-     .logo-text .subheading {
-         font-size: 11px;
-     }
- }
-
+.logo-text .subheading {
+    font-size: 12px;
+    font-weight: 400;
+    color: #f0f0f0;
+    text-align: left;
+}
 
  .user-menu {
      position: relative;
@@ -610,6 +579,11 @@
  }
 
  @media (max-width: 768px) {
+    .nav-left {
+        display: flex;
+        align-items: center;
+    }
+    
      .sidebar {
          position: fixed;
          left: -250px;
@@ -639,6 +613,11 @@
  }
 
  @media (max-width: 576px) {
+    .nav-left {
+        display: flex;
+        align-items: center;
+    }
+
      .logo-text {
          font-size: 1.1rem;
      }
@@ -775,3 +754,30 @@
          transform: rotate(360deg);
      }
  }
+
+ @media (max-width: 600px) {
+    .logo-img {
+        height: 50px;
+        width: 50px;
+    }
+
+    .logo-text .main-heading {
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .logo-text .subheading {
+        font-size: 10px;
+        text-align: left;
+    }
+
+    .logo-container {
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .logo-text {
+        margin-left: 6px;
+        gap: 2px;
+    }
+}
