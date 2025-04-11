@@ -1,99 +1,169 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Contact Form with Google Sheets Data</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-        button { 
-            padding: 10px 15px; 
-            background: #4285F4; 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            margin-top: 10px;
-        }
-        button:hover { background: #3367D6; }
-        .record-selector { margin-bottom: 20px; }
-        select { width: 100%; padding: 8px; }
-    </style>
-</head>
-<body>
-    <h1>Contact Information</h1>
-    
-    <div class="record-selector" id="recordSelectorContainer" style="display: none;">
-        <label for="records">Select a record:</label>
-        <select id="records">
-            <option value="">-- Select --</option>
-        </select>
-    </div>
-    
-    <form id="contactForm">
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone">
-        </div>
-    </form>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orange & White Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo-container">
+                <!-- Your rounded logo image -->
+                <img src="C:\BackUps\Orange\Trust Project\Hanumanji.png" alt="Logo" class="logo-img" height="60"
+                    width="80">
+                <div class="logo-text">
+                    <div class="main-heading">जय हनुमान चॅरिटेबल ट्रस्ट</div>
+                    <div class="subheading">म्हसाळा, वर्धा, नोंदणी क्र. - ई - ५२९/०१७ (वर्धा)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-menu">
+            <div class="user-icon" id="userIcon">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#"><i class="fas fa-user"></i> Profile</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar - always present but hidden on mobile -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">Menu</div>
+            <ul class="sidebar-menu">
+                <ul class="sidebar-menu">
+                    <li><a href="index.html" id="dashboard-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    </li>
+                    <li><a href="members.html" id="members-link"><i class="fas fa-users"></i> Members</a></li>
+                    <li><a href="receipt.html" id="receipt-link" class="active"><i class="fas fa-envelope"></i>
+                            Receipts</a></li>
+                </ul>
+            </ul>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>Welcome to Your Dashboard</h1>
+                <p>Manage your activities with our clean and intuitive interface featuring light orange and white
+                    colors. The sidebar is now persistent and the footer is fixed at the bottom.</p>
+                <button class="hero-btn">Get Started</button>
+            </section>
+
+            <!-- Additional content -->
+            <section>
+                <h2>Recent Activity</h2>
+                <p>Your recent activities and notifications will appear here. Scroll down to see how the fixed footer
+                    behaves.</p>
+
+                <div
+                    style="margin-top: 2rem; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    <h3 style="color: #ff8c42; margin-bottom: 1rem;">Quick Stats</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                        <div
+                            style="background: #fff5f0; padding: 1rem; border-radius: 8px; border-left: 4px solid #ff8c42;">
+                            <div style="font-size: 0.9rem; color: #666;">Total Visits</div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #ff8c42;">1,248</div>
+                        </div>
+                        <div
+                            style="background: #fff5f0; padding: 1rem; border-radius: 8px; border-left: 4px solid #ff8c42;">
+                            <div style="font-size: 0.9rem; color: #666;">New Users</div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #ff8c42;">84</div>
+                        </div>
+                        <div
+                            style="background: #fff5f0; padding: 1rem; border-radius: 8px; border-left: 4px solid #ff8c42;">
+                            <div style="font-size: 0.9rem; color: #666;">Tasks Completed</div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #ff8c42;">36</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacer to demonstrate fixed footer -->
+                <div style="height: 800px;"></div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Fixed Footer -->
+    <footer class="footer">
+        <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+        <p class="copyright">&copy; 2023 OrangeDash. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
     <script>
-        // Replace with your Apps Script Web App URL
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbz2Dcq28o3NEUTnDBklm0QuTMONwUqIXAuOt0_v9NnmjctfAeS0YutIl9gsIV8ZwJtm/exec/Sheet2';
-        
-        // Load data when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch(scriptUrl)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.records && data.records.length > 0) {
-                        const selector = document.getElementById('records');
-                        const container = document.getElementById('recordSelectorContainer');
-                        
-                        // Show selector if we have multiple records
-                        if (data.records.length > 1) {
-                            container.style.display = 'block';
-                            
-                            // Populate dropdown
-                            data.records.forEach((record, index) => {
-                                const option = document.createElement('option');
-                                option.value = index;
-                                option.textContent = record.name || `Record ${index + 1}`;
-                                selector.appendChild(option);
-                            });
-                            
-                            // Add change handler
-                            selector.addEventListener('change', function() {
-                                if (this.value !== "") {
-                                    fillForm(data.records[this.value]);
-                                }
-                            });
-                        }
-                        
-                        // Fill form with first record by default
-                        fillForm(data.records[0]);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading data:', error);
-                    alert('Failed to load data. Please try again later.');
-                });
+        // Toggle dropdown menu
+        document.getElementById('userIcon').addEventListener('click', function (e) {
+            e.stopPropagation();
+            document.getElementById('dropdownMenu').classList.toggle('active');
         });
-        
-        function fillForm(record) {
-            document.getElementById('name').value = record.name || '';
-            document.getElementById('email').value = record.email || '';
-            document.getElementById('phone').value = record.phone || '';
+
+        // Toggle sidebar on mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function () {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Close dropdown when clicking elsewhere
+        document.addEventListener('click', function () {
+            document.getElementById('dropdownMenu').classList.remove('active');
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        document.getElementById('dropdownMenu').addEventListener('click', function (e) {
+            e.stopPropagation();
+        });
+
+        function setActiveSidebarLink() {
+            // Get current page filename
+            const currentPage = window.location.pathname.split('/').pop();
+
+            // Remove active class from all links
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Add active class to current page link
+            switch (currentPage) {
+                case 'index.html':
+                    document.getElementById('dashboard-link').classList.add('active');
+                    break;
+                case 'members.html':
+                    document.getElementById('members-link').classList.add('active');
+                    break;
+                case 'receipt.html':
+                    document.getElementById('receipt-link').classList.add('active');
+                    break;
+                default:
+                    // If none match, you might want to handle this case
+                    break;
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                setActiveSidebarLink();
+            });
         }
     </script>
 </body>
+
 </html>
