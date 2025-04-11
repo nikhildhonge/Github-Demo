@@ -1026,8 +1026,8 @@
             let currentAction = document.getElementById('btn-saveMember').textContent;
             // Get form values
             const formData = {
-                action: 'create' === currentAction ? 'create' : 'update',
-                memberId: 'create' === currentAction ? generateMemberId() : document.getElementById('edit-member-id').value,
+                action: 'Add Member' === currentAction ? 'Add member' : 'Update Member',
+                memberId: 'Add Member' === currentAction ? generateMemberId() : document.getElementById('edit-member-id').value,
                 firstName: capitalizeFirstLetter(document.getElementById('firstName').value),
                 lastName: capitalizeFirstLetter(document.getElementById('lastName').value),
                 fullName:
@@ -1038,7 +1038,7 @@
                 role: document.getElementById('role').value.trim()
             };
 
-            if (currentAction === 'create') {
+            if (currentAction === 'Add Member') {
                 formData.joinDate = formattedDate;
             } else {
                 formData.lastUpdatedDate = formattedDate;
