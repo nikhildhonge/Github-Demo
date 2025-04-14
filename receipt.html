@@ -90,7 +90,8 @@
             display: none;
         }
 
-        .sidebar-toggle, .user-icon {
+        .sidebar-toggle,
+        .user-icon {
             background: rgba(255, 255, 255, 0.2);
             width: 36px;
             height: 36px;
@@ -104,7 +105,8 @@
             flex-shrink: 0;
         }
 
-        .sidebar-toggle:hover, .user-icon:hover {
+        .sidebar-toggle:hover,
+        .user-icon:hover {
             background: rgba(255, 255, 255, 0.3);
         }
 
@@ -246,12 +248,15 @@
 
         .table {
             margin-bottom: 0;
+            width: 100%;
+            border-collapse: collapse;
         }
 
         .table th {
             background-color: #fff5f0;
             color: var(--primary-color);
             padding: 0.75rem;
+            text-align: left;
             white-space: nowrap;
         }
 
@@ -268,7 +273,8 @@
             border: none;
             background: none;
             padding: 0.25rem;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            cursor: pointer;
         }
 
         .view-btn {
@@ -282,6 +288,107 @@
         .delete-btn {
             color: #e74c3c;
         }
+
+       /* Mobile Layout */
+@media (max-width: 768px) {
+    .table thead {
+        display: none;
+    }
+
+    .table tbody,
+    .table tbody tr,
+    .table tbody td {
+        display: block;
+        width: 100%;
+    }
+
+    .mobile-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .card-id {
+        font-weight: bold;
+        color: var(--primary-color);
+        font-size: 1rem;
+    }
+
+    .card-name {
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin: 0.5rem 0;
+    }
+
+    .card-amounts {
+        display: flex;
+        gap: 1.5rem;
+        margin: 0.75rem 0;
+        flex-wrap: wrap;
+    }
+
+    .amount-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .amount-label {
+        font-size: 0.8rem;
+        color: #666;
+    }
+
+    .amount-value {
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.75rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid #eee;
+    }
+
+    .card-date {
+        font-size: 0.85rem;
+        color: #666;
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .action-btn {
+        background: none;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 0.25rem;
+    }
+
+    .edit-btn { color: #2ecc71; }
+    .delete-btn { color: #e74c3c; }
+    .view-btn { color: #3498db; }
+}
+
+
+
+
 
         /* Footer Styles */
         .footer {
@@ -346,8 +453,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Modal styles */
@@ -359,7 +471,8 @@
             color: var(--primary-color);
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 0.25rem rgba(255, 140, 66, 0.25);
         }
@@ -369,11 +482,11 @@
             .logo-text .main-heading {
                 font-size: 1.1rem;
             }
-            
+
             .logo-text .subheading {
                 display: block;
             }
-            
+
             .main-content {
                 padding: 1.5rem;
             }
@@ -384,27 +497,27 @@
                 transform: translateX(0);
                 left: 0;
             }
-            
+
             .sidebar-backdrop {
                 display: none !important;
             }
-            
+
             .main-content {
                 margin-left: var(--sidebar-width);
             }
-            
+
             .sidebar-toggle {
                 display: none;
             }
-            
+
             .logo-text .main-heading {
                 font-size: 1.2rem;
             }
-            
+
             .logo-text .subheading {
                 font-size: 0.7rem;
             }
-            
+
             .page-title {
                 font-size: 1.75rem;
             }
@@ -414,11 +527,11 @@
             .main-content {
                 padding: 2rem;
             }
-            
+
             .stat-title {
                 font-size: 0.9rem;
             }
-            
+
             .stat-value {
                 font-size: 1.75rem;
             }
@@ -428,7 +541,7 @@
             .logo-text .main-heading {
                 font-size: 1.3rem;
             }
-            
+
             .logo-text .subheading {
                 font-size: 0.8rem;
             }
@@ -436,10 +549,13 @@
 
         /* Print styles */
         @media print {
-            .navbar, .sidebar, .footer {
+
+            .navbar,
+            .sidebar,
+            .footer {
                 display: none;
             }
-            
+
             .main-content {
                 margin: 0;
                 padding: 0;
@@ -479,8 +595,11 @@
                     <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
                     <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
                     <li><a class="dropdown-item" href="#"><i class="fas fa-question-circle me-2"></i> Help</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger fw-bold" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item text-danger fw-bold" href="#"><i class="fas fa-sign-out-alt me-2"></i>
+                            Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -596,7 +715,8 @@
                     <form id="memberForm">
                         <div class="mb-3">
                             <label for="member-name" class="form-label">Name ( नाम )</label>
-                            <input type="text" class="form-control" id="member-name" list="members-list" autocomplete="off" required placeholder="Start typing to search members...">
+                            <input type="text" class="form-control" id="member-name" list="members-list"
+                                autocomplete="off" required placeholder="Start typing to search members...">
                             <datalist id="members-list">
                                 <!-- Options will be loaded dynamically -->
                             </datalist>
@@ -632,7 +752,7 @@
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- JavaScript -->
     <script>
         // Replace with your web app URL from Apps Script
@@ -641,17 +761,17 @@
         let searchMemberRecords = []; // Store all records for easy access
 
         // Initialize Bootstrap components
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Initialize modal
             const receiptModal = new bootstrap.Modal(document.getElementById('receipt-modal'));
-            
+
             // Toggle sidebar on mobile
             const sidebar = document.getElementById('sidebar');
             const sidebarToggle = document.getElementById('sidebarToggle');
             const sidebarBackdrop = document.getElementById('sidebarBackdrop');
             const mainContent = document.getElementById('mainContent');
-            
-            sidebarToggle.addEventListener('click', function() {
+
+            sidebarToggle.addEventListener('click', function () {
                 sidebar.classList.toggle('active');
                 mainContent.classList.toggle('sidebar-open');
                 if (sidebar.classList.contains('active')) {
@@ -662,8 +782,8 @@
                     document.body.style.overflow = '';
                 }
             });
-            
-            sidebarBackdrop.addEventListener('click', function() {
+
+            sidebarBackdrop.addEventListener('click', function () {
                 sidebar.classList.remove('active');
                 mainContent.classList.remove('sidebar-open');
                 sidebarBackdrop.style.display = 'none';
@@ -671,7 +791,7 @@
             });
 
             // Calculate balance amount when paid amount changes
-            document.getElementById('paid-amount').addEventListener('change', function(e) {
+            document.getElementById('paid-amount').addEventListener('change', function (e) {
                 let expected_amount = document.getElementById('expected-amount').value;
                 let paid_amount = document.getElementById('paid-amount').value;
                 if (expected_amount - paid_amount === 0) {
@@ -682,7 +802,7 @@
             });
 
             // Show modal for adding new receipt
-            document.getElementById('btn-add-receipt').addEventListener('click', function() {
+            document.getElementById('btn-add-receipt').addEventListener('click', function () {
                 document.getElementById('modal-title').textContent = 'Add New Receipt';
                 document.getElementById('btn-save-receipt').textContent = 'Save Receipt';
                 document.getElementById('edit-receipt-id').value = '';
@@ -692,7 +812,7 @@
 
             // Set active sidebar link based on current page
             setActiveSidebarLink();
-            
+
             // Initial data load
             loadData();
         });
@@ -718,35 +838,98 @@
 
         // Render table with records
         function renderTable(records) {
-            const tableBody = document.getElementById('members-tbody');
-            tableBody.innerHTML = '';
+    const tableBody = document.getElementById('members-tbody');
+    tableBody.innerHTML = '';
 
-            records.forEach((record, index) => {
-                const row = document.createElement('tr');
-                const id = `#${String(index + 1).padStart(3, '0')}`;
+    const isMobile = window.innerWidth <= 768;
 
-                row.innerHTML = `
-                    <td>${id}</td>
-                    <td>${record.member_name || ''}</td>
-                    <td>${record.expected_amount || ''}</td>
-                    <td>${record.paid_amount || ''}</td>
-                    <td>${record.balance_amount ?? ''}</td>
-                    <td>${record.created_date ? formatDate(record.created_date) : ''}</td>
-                    <td class="text-end">
-                        <div class="d-flex justify-content-end gap-2">
-                            <button class="action-btn edit-btn" title="Edit" data-id="${record.outstanding_id || index}">
+    records.forEach((record, index) => {
+        const id = `#${String(index + 1).padStart(3, '0')}`;
+        const createdDate = record.created_date || '';
+        const memberName = record.member_name || '';
+        const expected = record.expected_amount || 0;
+        const paid = record.paid_amount || 0;
+        const balance = record.balance_amount ?? 0;
+        const recordId = record.outstanding_id || index;
+
+        if (isMobile) {
+            const mobileCard = document.createElement('tr');
+            mobileCard.innerHTML = `
+                <td colspan="100%">
+                    <div class="mobile-card">
+                        <div class="card-header">
+                            <span class="card-id">${id}</span>
+                            <button class="action-btn edit-btn" title="Edit" data-id="${recordId}">
                                 <i class="fas fa-edit"></i>
                             </button>
                         </div>
-                    </td>
-                `;
-
-                tableBody.appendChild(row);
-            });
-
-            // Add event listeners after rendering
-            addActionListeners();
+                        <div class="card-name">${memberName}</div>
+                        <div class="card-amounts">
+                            <div class="amount-item">
+                                <span class="amount-label">Expected</span>
+                                <span class="amount-value">₹${expected}</span>
+                            </div>
+                            <div class="amount-item">
+                                <span class="amount-label">Paid</span>
+                                <span class="amount-value">₹${paid}</span>
+                            </div>
+                            <div class="amount-item">
+                                <span class="amount-label">Balance</span>
+                                <span class="amount-value">₹${balance}</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-date">${new Date(createdDate).toLocaleDateString('en-IN', {
+                                day: '2-digit',
+                                month: 'short',
+                                year: 'numeric'
+                            })}</span>
+                            <div class="card-actions">
+                                <button class="action-btn delete-btn" title="Delete" data-id="${recordId}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <button class="action-btn view-btn" title="View" data-id="${recordId}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            `;
+            tableBody.appendChild(mobileCard);
+        } else {
+            // Desktop row remains the same
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${id}</td>
+                <td>${memberName}</td>
+                <td>₹${expected}</td>
+                <td>₹${paid}</td>
+                <td>₹${balance}</td>
+                <td>${new Date(createdDate).toLocaleDateString()}</td>
+                <td class="text-end">
+                    <div class="d-flex justify-content-end gap-2">
+                        <button class="action-btn edit-btn" title="Edit" data-id="${recordId}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" title="Delete" data-id="${recordId}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="action-btn view-btn" title="View" data-id="${recordId}">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tableBody.appendChild(row);
         }
+    });
+
+    addActionListeners();
+}
+
+
+
 
         // Add event listeners for action buttons
         function addActionListeners() {
@@ -764,14 +947,14 @@
             const record = allRecords.find(r => r.outstanding_id == outstanding_id);
             if (record) {
                 // Populate form with record data
-                document.getElementById('member-name').value = record.member_name || '';
-                document.getElementById('member-id').value = record.member_id || '';
-                document.getElementById('expected-amount').value = record.expected_amount || '';
-                document.getElementById('paid-amount').value = record.paid_amount || '';
-                document.getElementById('balance-amount').value = record.balance_amount || '';
+                document.getElementById('member-name').value = String(record.member_name) || '';
+                document.getElementById('member-id').value = parseInt(record.member_id) || '';
+                document.getElementById('expected-amount').value = parseFloat(record.expected_amount) || 0;
+                document.getElementById('paid-amount').value = parseFloat(record.paid_amount) || 0;
+                document.getElementById('balance-amount').value = parseFloat(record.balance_amount) || 0;
 
                 // Store the outstanding_id being edited
-                document.getElementById('edit-receipt-id').value = outstanding_id;
+                document.getElementById('edit-receipt-id').value = parseInt(outstanding_id);
 
                 // Update modal title and button
                 document.getElementById('modal-title').textContent = 'Edit Receipt';
@@ -785,61 +968,70 @@
             }
         }
 
+
         // Save receipt function
-        document.getElementById('btn-save-receipt').addEventListener('click', async function(e) {
+        document.getElementById('btn-save-receipt').addEventListener('click', async function (e) {
             e.preventDefault();
             showLoader();
-            const today = new Date();
-            const formattedDate = today.getDate().toString().padStart(2, '0') + '/' +
-                (today.getMonth() + 1).toString().padStart(2, '0') + '/' + today.getFullYear();
 
-            let currentAction = document.getElementById('btn-save-receipt').textContent.toLowerCase();            
-            // Get form values
-            const formData = {
-                action: currentAction.includes('save') ? 'createoutstanding' : 'updateoutstanding',
-                outstanding_id: currentAction.includes('save') ? generateOutstandingId() : document.getElementById('edit-receipt-id').value,
-                member_id: document.getElementById('member-id').value,
-                member_name: document.getElementById('member-name').value,
-                expected_amount: parseFloat(document.getElementById('expected-amount').value).toFixed(2),
-                paid_amount: parseFloat(document.getElementById('paid-amount').value).toFixed(2),
-                balance_amount: parseFloat(document.getElementById('balance-amount').value).toFixed(2)
-            };
-            if (currentAction.includes('save')) {
-                formData.created_date = formattedDate;
-            } else {
-                formData.last_Updated_Date = formattedDate;
-            }
-            try {
-                const response = await fetch(scriptUrl + '?sheet=Outstandings', {
-                    method: 'POST',
-                    body: JSON.stringify(formData),
-                    mode: "no-cors",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+            if (validateReceiptForm()) {
+
+                const today = new Date();
+                const formattedDate = today.toLocaleDateString('en-IN');
+
+                let currentAction = document.getElementById('btn-save-receipt').textContent.toLowerCase();
+                // Get form values
+                const formData = {
+                    action: currentAction.includes('save') ? 'createoutstanding' : 'updateoutstanding',
+                    outstanding_id: currentAction.includes('save')
+                        ? generateOutstandingId()
+                        : parseInt(document.getElementById('edit-receipt-id').value),
+                    member_id: parseInt(document.getElementById('member-id').value) || 0,
+                    member_name: String(document.getElementById('member-name').value).trim(),
+                    expected_amount: parseFloat(document.getElementById('expected-amount').value).toFixed(2),
+                    paid_amount: parseFloat(document.getElementById('paid-amount').value).toFixed(2),
+                    balance_amount: parseFloat(document.getElementById('balance-amount').value).toFixed(2)
+                };
                 if (currentAction.includes('save')) {
-                    alert(`Receipt added successfully.`);
+                    formData.created_date = formattedDate;
                 } else {
-                    alert(`Receipt updated successfully.`);
+                    formData.last_Updated_Date = formattedDate;
                 }
-                // Reset form and close modal
-                document.getElementById('btn-save-receipt').textContent = 'Save Receipt';
-                document.getElementById('edit-receipt-id').value = '';
-                resetInputs();
-                
-                // Close modal
-                const receiptModal = bootstrap.Modal.getInstance(document.getElementById('receipt-modal'));
-                receiptModal.hide();
-                
-                // Reload data
-                loadData();
-                
-                // Send WhatsApp message
-                sendDonationMessage(formData);
-            } catch (error) {
-                console.error('Error saving receipt:', error);
-                alert('Failed to save receipt. Please try again.');
+                try {
+                    const response = await fetch(scriptUrl + '?sheet=Outstandings', {
+                        method: 'POST',
+                        body: JSON.stringify(formData),
+                        mode: "no-cors",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    if (currentAction.includes('save')) {
+                        alert(`Receipt added successfully.`);
+                    } else {
+                        alert(`Receipt updated successfully.`);
+                    }
+                    // Reset form and close modal
+                    document.getElementById('btn-save-receipt').textContent = 'Save Receipt';
+                    document.getElementById('edit-receipt-id').value = '';
+                    resetInputs();
+
+                    // Close modal
+                    const receiptModal = bootstrap.Modal.getInstance(document.getElementById('receipt-modal'));
+                    receiptModal.hide();
+
+                    // Reload data
+                    loadData();
+
+                    // Send WhatsApp message
+                    sendDonationMessage(formData);
+
+                } catch (error) {
+                    console.error('Error saving receipt:', error);
+                    alert('Failed to save receipt. Please try again.');
+                    hideLoader();
+                }
+            } else {
                 hideLoader();
             }
         });
@@ -851,10 +1043,10 @@
             document.getElementById('balance-amount').value = '';
         }
         function generateOutstandingId() {
-            const randomPart = Math.floor(100000000 + Math.random() * 900000000);
-            const timestampPart = Date.now() % 10;
-            const memberId = parseInt(`${randomPart}${timestampPart}`);
-            return String(memberId).padStart(10, '0');
+            const randomPart = Math.floor(100000000 + Math.random() * 900000000); // 9-digit random
+            const timestampPart = Date.now() % 10; // Last digit of timestamp
+            const memberId = parseInt(`${randomPart}${timestampPart}`); // Combine and convert to number
+            return memberId; // Returns a number (e.g., 1234567895)
         }
         const nameInput = document.getElementById('member-name');
         const datalist = document.getElementById('members-list');
@@ -862,7 +1054,7 @@
 
         // Debounce function to limit API calls
         function debounce(func, delay) {
-            return function() {
+            return function () {
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(func, delay);
             };
@@ -899,11 +1091,11 @@
             }
         }
         // Attach debounced search to input event
-        nameInput.addEventListener('input', debounce(function() {
+        nameInput.addEventListener('input', debounce(function () {
             searchMembers(nameInput.value.trim());
         }, 300));
 
-        nameInput.addEventListener('change', function() {
+        nameInput.addEventListener('change', function () {
             const selectedName = this.value;
             const selectedOption = Array.from(datalist.options).find(opt => opt.value === selectedName);
             if (selectedOption) {
@@ -998,6 +1190,75 @@
         function hideLoader() {
             document.getElementById('loader').style.display = 'none';
         }
+
+        function validateReceiptForm() {
+            const memberNameInput = document.getElementById('member-name');
+            const memberIdInput = document.getElementById('member-id');
+            const expectedAmountInput = document.getElementById('expected-amount');
+            const paidAmountInput = document.getElementById('paid-amount');
+
+            // Reset all custom validity messages
+            memberNameInput.setCustomValidity('');
+            memberIdInput.setCustomValidity('');
+            expectedAmountInput.setCustomValidity('');
+            paidAmountInput.setCustomValidity('');
+
+            // Validate member name is selected (and member ID is set)
+            if (!memberNameInput.value.trim()) {
+                memberNameInput.setCustomValidity('Please select a member');
+                memberNameInput.reportValidity();
+                return false;
+            }
+
+            // Validate expected amount
+            if (!expectedAmountInput.value.trim()) {
+                expectedAmountInput.setCustomValidity('Expected amount is required');
+                expectedAmountInput.reportValidity();
+                return false;
+            }
+
+            const expectedAmount = parseFloat(expectedAmountInput.value);
+            if (isNaN(expectedAmount)) {
+                expectedAmountInput.setCustomValidity('Please enter a valid number');
+                expectedAmountInput.reportValidity();
+                return false;
+            }
+
+            if (expectedAmount < 0) {
+                expectedAmountInput.setCustomValidity('Expected amount cannot be negative');
+                expectedAmountInput.reportValidity();
+                return false;
+            }
+
+            // Validate paid amount
+            if (!paidAmountInput.value.trim()) {
+                paidAmountInput.setCustomValidity('Paid amount is required');
+                paidAmountInput.reportValidity();
+                return false;
+            }
+
+            const paidAmount = parseFloat(paidAmountInput.value);
+            if (isNaN(paidAmount)) {
+                paidAmountInput.setCustomValidity('Please enter a valid number');
+                paidAmountInput.reportValidity();
+                return false;
+            }
+
+            if (paidAmount < 0) {
+                paidAmountInput.setCustomValidity('Paid amount cannot be negative');
+                paidAmountInput.reportValidity();
+                return false;
+            }
+
+            if (paidAmount > expectedAmount) {
+                paidAmountInput.setCustomValidity('Paid amount cannot be greater than expected amount');
+                paidAmountInput.reportValidity();
+                return false;
+            }
+
+            return true;
+        }
     </script>
 </body>
+
 </html>
