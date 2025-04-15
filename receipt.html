@@ -289,102 +289,110 @@
             color: #e74c3c;
         }
 
-       /* Mobile Layout */
-@media (max-width: 768px) {
-    .table thead {
-        display: none;
-    }
+        /* Mobile Layout */
+        @media (max-width: 768px) {
+            .table thead {
+                display: none;
+            }
 
-    .table tbody,
-    .table tbody tr,
-    .table tbody td {
-        display: block;
-        width: 100%;
-    }
+            .table tbody,
+            .table tbody tr,
+            .table tbody td {
+                display: block;
+                width: 100%;
+            }
 
-    .mobile-card {
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 0.5rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
+            .mobile-card {
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 0.5rem;
+                padding: 1rem;
+                margin-bottom: 1rem;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
 
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.75rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid #eee;
-    }
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid #eee;
+            }
 
-    .card-id {
-        font-weight: bold;
-        color: var(--primary-color);
-        font-size: 1rem;
-    }
+            .card-id {
+                font-weight: bold;
+                color: var(--primary-color);
+                font-size: 1rem;
+            }
 
-    .card-name {
-        font-weight: bold;
-        font-size: 1.1rem;
-        margin: 0.5rem 0;
-    }
+            .card-name {
+                font-weight: bold;
+                font-size: 1.1rem;
+                margin: 0.5rem 0;
+            }
 
-    .card-amounts {
-        display: flex;
-        gap: 1.5rem;
-        margin: 0.75rem 0;
-        flex-wrap: wrap;
-    }
+            .card-amounts {
+                display: flex;
+                gap: 3rem;
+                margin: 0.75rem 0;
+                flex-wrap: wrap;
+            }
 
-    .amount-item {
-        display: flex;
-        flex-direction: column;
-    }
+            .amount-item {
+                display: flex;
+                flex-direction: column;
+            }
 
-    .amount-label {
-        font-size: 0.8rem;
-        color: #666;
-    }
+            .amount-label {
+                font-size: 0.8rem;
+                color: #666;
+            }
 
-    .amount-value {
-        font-weight: bold;
-        font-size: 1rem;
-    }
+            .amount-value {
+                font-weight: bold;
+                font-size: 1rem;
+            }
 
-    .card-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 0.75rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid #eee;
-    }
+            .card-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 0.75rem;
+                padding-top: 0.5rem;
+                border-top: 1px solid #eee;
+            }
 
-    .card-date {
-        font-size: 0.85rem;
-        color: #666;
-    }
+            .card-date {
+                font-size: 0.85rem;
+                color: #666;
+            }
 
-    .card-actions {
-        display: flex;
-        gap: 0.75rem;
-    }
+            .card-actions {
+                display: flex;
+                gap: 0.75rem;
+            }
 
-    .action-btn {
-        background: none;
-        border: none;
-        font-size: 1rem;
-        cursor: pointer;
-        padding: 0.25rem;
-    }
+            .action-btn {
+                background: none;
+                border: none;
+                font-size: 1rem;
+                cursor: pointer;
+                padding: 0.25rem;
+            }
 
-    .edit-btn { color: #2ecc71; }
-    .delete-btn { color: #e74c3c; }
-    .view-btn { color: #3498db; }
-}
+            .edit-btn {
+                color: #2ecc71;
+            }
+
+            .delete-btn {
+                color: #e74c3c;
+            }
+
+            .view-btn {
+                color: #3498db;
+            }
+        }
 
 
 
@@ -676,10 +684,8 @@
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Expected Amount</th>
                             <th>Paid Amount</th>
-                            <th>Balance Amount</th>
-                            <th>Created Date</th>
+                            <th>Payment Date</th>
                             <th class="text-end">Actions</th>
                         </tr>
                     </thead>
@@ -759,6 +765,7 @@
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbz2Dcq28o3NEUTnDBklm0QuTMONwUqIXAuOt0_v9NnmjctfAeS0YutIl9gsIV8ZwJtm/exec';
         let allRecords = []; // Store all records for easy access
         let searchMemberRecords = []; // Store all records for easy access
+        let outstandingRecords = [];
 
         // Initialize Bootstrap components
         document.addEventListener('DOMContentLoaded', function () {
@@ -792,10 +799,12 @@
 
             // Calculate balance amount when paid amount changes
             document.getElementById('paid-amount').addEventListener('change', function (e) {
-                let expected_amount = document.getElementById('expected-amount').value;
-                let paid_amount = document.getElementById('paid-amount').value;
+                let expected_amount = parseFloat(parseFloat(document.getElementById('expected-amount').value).toFixed(2));
+                let paid_amount = parseFloat(parseFloat(document.getElementById('paid-amount').value).toFixed(2));
                 if (expected_amount - paid_amount === 0) {
                     document.getElementById('balance-amount').value = 0.00;
+                } else if(memberOutstandingRecord) {
+                    document.getElementById('balance-amount').value = expected_amount - (paid_amount + memberOutstandingRecord.paid_amount);
                 } else {
                     document.getElementById('balance-amount').value = expected_amount - paid_amount;
                 }
@@ -814,47 +823,47 @@
             setActiveSidebarLink();
 
             // Initial data load
-            loadData();
+            loadPayments();
         });
 
-        // Load data and populate table
-        function loadData() {
+
+        function loadPayments() {
             showLoader();
-            fetch(scriptUrl + '?sheet=Outstandings')
+            fetch(scriptUrl + '?sheet=Payments')
                 .then(response => response.json())
                 .then(data => {
-                    if (data.records && data.records.length > 1) {
-                        allRecords = data.records;
-                        renderTable(allRecords);
+                    if (data.records && data.records.length >= 1) {
+                        renderTable(data.records);
                     }
                     hideLoader();
                 })
                 .catch(error => {
                     hideLoader();
-                    console.error('Error loading data:', error);
                     alert('Failed to load data. Please try again later.');
                 });
         }
 
+        let memberOutstandingRecord = {};
+
+
+
         // Render table with records
         function renderTable(records) {
-    const tableBody = document.getElementById('members-tbody');
-    tableBody.innerHTML = '';
+            const tableBody = document.getElementById('members-tbody');
+            tableBody.innerHTML = '';
 
-    const isMobile = window.innerWidth <= 768;
+            const isMobile = window.innerWidth <= 768;
 
-    records.forEach((record, index) => {
-        const id = `#${String(index + 1).padStart(3, '0')}`;
-        const createdDate = record.created_date || '';
-        const memberName = record.member_name || '';
-        const expected = record.expected_amount || 0;
-        const paid = record.paid_amount || 0;
-        const balance = record.balance_amount ?? 0;
-        const recordId = record.outstanding_id || index;
+            records.forEach((record, index) => {
+                const id = `#${String(index + 1).padStart(3, '0')}`;
+                const paymentDate = record.payment_date || '';
+                const memberName = record.member_name || '';
+                const paid = record.paid_amount || 0;
+                const recordId = record.payment_id || index;
 
-        if (isMobile) {
-            const mobileCard = document.createElement('tr');
-            mobileCard.innerHTML = `
+                if (isMobile) {
+                    const mobileCard = document.createElement('tr');
+                    mobileCard.innerHTML = `
                 <td colspan="100%">
                     <div class="mobile-card">
                         <div class="card-header">
@@ -866,24 +875,12 @@
                         <div class="card-name">${memberName}</div>
                         <div class="card-amounts">
                             <div class="amount-item">
-                                <span class="amount-label">Expected</span>
-                                <span class="amount-value">₹${expected}</span>
-                            </div>
-                            <div class="amount-item">
                                 <span class="amount-label">Paid</span>
-                                <span class="amount-value">₹${paid}</span>
-                            </div>
-                            <div class="amount-item">
-                                <span class="amount-label">Balance</span>
-                                <span class="amount-value">₹${balance}</span>
-                            </div>
+                                <span class="amount-value" style="color: #2196F3;">₹${paid}</span>
+                            </div>                           
                         </div>
                         <div class="card-footer">
-                            <span class="card-date">${new Date(createdDate).toLocaleDateString('en-IN', {
-                                day: '2-digit',
-                                month: 'short',
-                                year: 'numeric'
-                            })}</span>
+                            <span class="card-date">${paymentDate}</span>
                             <div class="card-actions">
                                 <button class="action-btn delete-btn" title="Delete" data-id="${recordId}">
                                     <i class="fas fa-trash"></i>
@@ -896,17 +893,15 @@
                     </div>
                 </td>
             `;
-            tableBody.appendChild(mobileCard);
-        } else {
-            // Desktop row remains the same
-            const row = document.createElement('tr');
-            row.innerHTML = `
+                    tableBody.appendChild(mobileCard);
+                } else {
+                    // Desktop row remains the same
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
                 <td>${id}</td>
                 <td>${memberName}</td>
-                <td>₹${expected}</td>
                 <td>₹${paid}</td>
-                <td>₹${balance}</td>
-                <td>${new Date(createdDate).toLocaleDateString()}</td>
+                <td>${paymentDate}</td>
                 <td class="text-end">
                     <div class="d-flex justify-content-end gap-2">
                         <button class="action-btn edit-btn" title="Edit" data-id="${recordId}">
@@ -921,12 +916,12 @@
                     </div>
                 </td>
             `;
-            tableBody.appendChild(row);
-        }
-    });
+                    tableBody.appendChild(row);
+                }
+            });
 
-    addActionListeners();
-}
+            addActionListeners();
+        }
 
 
 
@@ -936,25 +931,23 @@
             // Edit record
             document.querySelectorAll('.edit-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    const outstanding_id = e.currentTarget.getAttribute('data-id');
-                    editRecord(outstanding_id);
+                    const payment_id = e.currentTarget.getAttribute('data-id');
+                    editRecord(payment_id);
                 });
             });
         }
 
         // Edit record function
-        function editRecord(outstanding_id) {
-            const record = allRecords.find(r => r.outstanding_id == outstanding_id);
+        function editRecord(payment_id) {
+            const record = allRecords.find(r => r.payment_id == payment_id);
             if (record) {
                 // Populate form with record data
                 document.getElementById('member-name').value = String(record.member_name) || '';
                 document.getElementById('member-id').value = parseInt(record.member_id) || '';
-                document.getElementById('expected-amount').value = parseFloat(record.expected_amount) || 0;
                 document.getElementById('paid-amount').value = parseFloat(record.paid_amount) || 0;
-                document.getElementById('balance-amount').value = parseFloat(record.balance_amount) || 0;
 
                 // Store the outstanding_id being edited
-                document.getElementById('edit-receipt-id').value = parseInt(outstanding_id);
+                document.getElementById('edit-receipt-id').value = parseInt(payment_id);
 
                 // Update modal title and button
                 document.getElementById('modal-title').textContent = 'Edit Receipt';
@@ -969,78 +962,163 @@
         }
 
 
+        
+
+
         // Save receipt function
         document.getElementById('btn-save-receipt').addEventListener('click', async function (e) {
+
             e.preventDefault();
             showLoader();
 
             if (validateReceiptForm()) {
+                
+                let outstanding_id = null;
 
-                const today = new Date();
-                const formattedDate = today.toLocaleDateString('en-IN');
-
-                let currentAction = document.getElementById('btn-save-receipt').textContent.toLowerCase();
-                // Get form values
-                const formData = {
-                    action: currentAction.includes('save') ? 'createoutstanding' : 'updateoutstanding',
-                    outstanding_id: currentAction.includes('save')
-                        ? generateOutstandingId()
-                        : parseInt(document.getElementById('edit-receipt-id').value),
-                    member_id: parseInt(document.getElementById('member-id').value) || 0,
-                    member_name: String(document.getElementById('member-name').value).trim(),
-                    expected_amount: parseFloat(document.getElementById('expected-amount').value).toFixed(2),
-                    paid_amount: parseFloat(document.getElementById('paid-amount').value).toFixed(2),
-                    balance_amount: parseFloat(document.getElementById('balance-amount').value).toFixed(2)
-                };
-                if (currentAction.includes('save')) {
-                    formData.created_date = formattedDate;
+                if (memberOutstandingRecord == null) {
+                    outstanding_id = await createOutstanding();
                 } else {
-                    formData.last_Updated_Date = formattedDate;
+                    outstanding_id = await updateOutstanding();
                 }
-                try {
-                    const response = await fetch(scriptUrl + '?sheet=Outstandings', {
-                        method: 'POST',
-                        body: JSON.stringify(formData),
-                        mode: "no-cors",
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    if (currentAction.includes('save')) {
-                        alert(`Receipt added successfully.`);
-                    } else {
-                        alert(`Receipt updated successfully.`);
-                    }
-                    // Reset form and close modal
-                    document.getElementById('btn-save-receipt').textContent = 'Save Receipt';
-                    document.getElementById('edit-receipt-id').value = '';
-                    resetInputs();
 
-                    // Close modal
-                    const receiptModal = bootstrap.Modal.getInstance(document.getElementById('receipt-modal'));
-                    receiptModal.hide();
+                await createPayment(outstanding_id);
+                resetInputs();
+                await loadPayments();
+                const receiptModal = bootstrap.Modal.getInstance(document.getElementById('receipt-modal'));
+                receiptModal.hide();
 
-                    // Reload data
-                    loadData();
 
-                    // Send WhatsApp message
-                    sendDonationMessage(formData);
-
-                } catch (error) {
-                    console.error('Error saving receipt:', error);
-                    alert('Failed to save receipt. Please try again.');
-                    hideLoader();
-                }
             } else {
                 hideLoader();
             }
         });
+
+        function fetchMemberOutstandingRecord(member_id) {
+            showLoader();
+            fetch(scriptUrl + '?sheet=Outstandings')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.records && data.records.length >= 1) {
+                        memberOutstandingRecord = data.records.find(record => record.member_id == member_id && record.status === 'Pending' && record.balance_amount != 0);
+                        if(memberOutstandingRecord) {
+                            document.getElementById('expected-amount').value = memberOutstandingRecord.expected_amount;
+                        }
+                    } else {
+                        memberOutstandingRecord = null;
+                    }
+                    hideLoader();
+                })
+                .catch(error => {
+                    hideLoader();
+                    alert('Failed to load data. Please try again later.');
+                });
+        }
+
+        async function createPayment(outstanding_id) {
+            showLoader();
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-IN');
+
+            const paymentData = {
+                action: 'createpayment',
+                payment_id: generateOutstandingId(),
+                outstanding_id: outstanding_id,
+                member_id: parseInt(document.getElementById('member-id').value) || 0,
+                member_name: String(document.getElementById('member-name').value).trim(),
+                paid_amount: parseFloat(parseFloat(document.getElementById('paid-amount').value).toFixed(2)),
+                payment_date: formattedDate
+            };
+
+            try {
+                const response = await fetch(scriptUrl + '?sheet=Payments', {
+                    method: 'POST',
+                    body: JSON.stringify(paymentData),
+                    mode: "no-cors",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } catch (error) {
+                hideLoader();
+                console.error('Error saving receipt:', error);
+            }
+            sendDonationMessage(paymentData);
+        }
+
+        async function createOutstanding() {
+            showLoader();
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-IN');
+
+            const statusFalg = parseFloat(parseFloat(document.getElementById('expected-amount').value).toFixed(2)) - parseFloat(parseFloat(document.getElementById('paid-amount').value).toFixed(2));
+
+            const outstandingData = {
+                action: 'createoutstanding',
+                outstanding_id: generateOutstandingId(),
+                member_id: parseInt(document.getElementById('member-id').value) || 0,
+                member_name: String(document.getElementById('member-name').value).trim(),
+                expected_amount: parseFloat(parseFloat(document.getElementById('expected-amount').value).toFixed(2)),
+                paid_amount: parseFloat(parseFloat(document.getElementById('paid-amount').value).toFixed(2)),
+                balance_amount: parseFloat(parseFloat(document.getElementById('balance-amount').value).toFixed(2)),
+                created_date: formattedDate,
+                last_updated_date: null,
+                status: statusFalg === 0 ? 'Completed' : 'Pending',
+            };
+
+            try {
+                const response = await fetch(scriptUrl + '?sheet=Outstandings', {
+                    method: 'POST',
+                    body: JSON.stringify(outstandingData),
+                    mode: "no-cors",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } catch (error) {
+                hideLoader();
+                console.error('Error saving receipt:', error);
+            }
+            return outstandingData.outstanding_id;
+        }
+
+        async function updateOutstanding() {
+            showLoader();
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('en-IN');
+            const paid = memberOutstandingRecord.paid_amount + parseFloat(parseFloat(document.getElementById('paid-amount').value).toFixed(2));
+            const balance = memberOutstandingRecord.balance_amount - parseFloat(parseFloat(document.getElementById('paid-amount').value).toFixed(2));
+
+            const outstandingData = {
+                action: 'updateoutstanding',
+                outstanding_id: memberOutstandingRecord.outstanding_id,
+                paid_amount: paid,
+                balance_amount: balance,               
+                last_updated_date: formattedDate,
+                status: balance === 0 ? 'Completed' : 'Pending'
+            };
+
+            try {
+                const response = await fetch(scriptUrl + '?sheet=Outstandings', {
+                    method: 'POST',
+                    body: JSON.stringify(outstandingData),
+                    mode: "no-cors",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } catch (error) {
+                hideLoader();
+                console.error('Error saving receipt:', error);
+            }
+            return outstandingData.outstanding_id;
+        }
 
         function resetInputs() {
             document.getElementById('member-name').value = '';
             document.getElementById('expected-amount').value = '';
             document.getElementById('paid-amount').value = '';
             document.getElementById('balance-amount').value = '';
+            hideLoader();
         }
         function generateOutstandingId() {
             const randomPart = Math.floor(100000000 + Math.random() * 900000000); // 9-digit random
@@ -1048,60 +1126,7 @@
             const memberId = parseInt(`${randomPart}${timestampPart}`); // Combine and convert to number
             return memberId; // Returns a number (e.g., 1234567895)
         }
-        const nameInput = document.getElementById('member-name');
-        const datalist = document.getElementById('members-list');
-        let debounceTimer;
 
-        // Debounce function to limit API calls
-        function debounce(func, delay) {
-            return function () {
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(func, delay);
-            };
-        }
-        // Fetch members from server based on search term
-        async function searchMembers(searchTerm) {
-            if (searchTerm.length < 2) return;
-
-            showLoader();
-            try {
-                fetch(scriptUrl + '?sheet=sheet2&search=' + searchTerm)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.records && data.records.length > 0) {
-                            datalist.innerHTML = '';
-                            searchMemberRecords = data.records;
-                            data.records.forEach(record => {
-                                const option = document.createElement('option');
-                                option.value = record.fullname;
-                                option.setAttribute('data-id', record.memberid);
-                                datalist.appendChild(option);
-                            });
-                        }
-                        hideLoader();
-                    })
-                    .catch(error => {
-                        console.error('Error loading data:', error);
-                        alert('Failed to load data. Please try again later.');
-                        hideLoader();
-                    });
-            } catch (error) {
-                console.error('Error fetching members:', error);
-                hideLoader();
-            }
-        }
-        // Attach debounced search to input event
-        nameInput.addEventListener('input', debounce(function () {
-            searchMembers(nameInput.value.trim());
-        }, 300));
-
-        nameInput.addEventListener('change', function () {
-            const selectedName = this.value;
-            const selectedOption = Array.from(datalist.options).find(opt => opt.value === selectedName);
-            if (selectedOption) {
-                document.getElementById('member-id').value = selectedOption.getAttribute('data-id');
-            }
-        });
         function formatDate(dateInput) {
             const date = new Date(dateInput);
             const day = String(date.getDate()).padStart(2, '0');
@@ -1116,7 +1141,7 @@
             }
             const today = new Date();
             const dateStr = today.toLocaleDateString('en-IN');
-            const amountInWords = numberToWords(formData.expected_amount);
+            const amountInWords = numberToWords(formData.paid_amount);
             const receiptNumber = parseInt('001');
 
             // Improved message formatting with proper line breaks and spacing
@@ -1129,7 +1154,7 @@
                 🔖 *पावती क्रमांक:* ${receiptNumber}
                 📅 *दिनांक:* ${dateStr}
                 👤 *श्री/श्रीमती:* ${memberRecord.fullname}
-                💵 *रक्कम:* ₹${formData.expected_amount} (${amountInWords} रुपये फक्त)
+                💵 *रक्कम:* ₹${formData.paid_amount} (${amountInWords} रुपये फक्त)
                 ────────────────   
 
                 हे प्रमाणित करण्यात येते की वर नमूद व्यक्तीकडून हनुमान देवस्थानासाठी देणगी/वर्गणी स्वीकारण्यात आली आहे.
@@ -1258,6 +1283,62 @@
 
             return true;
         }
+
+        const nameInput = document.getElementById('member-name');
+        const datalist = document.getElementById('members-list');
+        let debounceTimer;
+
+        // Debounce function to limit API calls
+        function debounce(func, delay) {
+            return function () {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(func, delay);
+            };
+        }
+        // Fetch members from server based on search term
+        async function searchMembers(searchTerm) {
+            if (searchTerm.length < 2) return;
+
+            showLoader();
+            try {
+                fetch(scriptUrl + '?sheet=sheet2&search=' + searchTerm)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.records && data.records.length > 0) {
+                            datalist.innerHTML = '';
+                            searchMemberRecords = data.records;
+                            data.records.forEach(record => {
+                                const option = document.createElement('option');
+                                option.value = record.fullname;
+                                option.setAttribute('data-id', record.memberid);
+                                datalist.appendChild(option);
+                            });
+                        }
+                        hideLoader();
+                    })
+                    .catch(error => {
+                        console.error('Error loading data:', error);
+                        alert('Failed to load data. Please try again later.');
+                        hideLoader();
+                    });
+            } catch (error) {
+                console.error('Error fetching members:', error);
+                hideLoader();
+            }
+        }
+        // Attach debounced search to input event
+        nameInput.addEventListener('input', debounce(async function () {
+            await searchMembers(nameInput.value.trim());
+        }, 300));
+
+        nameInput.addEventListener('change', async function () {
+            const selectedName = this.value;
+            const selectedOption = Array.from(datalist.options).find(opt => opt.value === selectedName);
+            if (selectedOption) {
+                document.getElementById('member-id').value = selectedOption.getAttribute('data-id');
+                await fetchMemberOutstandingRecord(selectedOption.getAttribute('data-id'));
+            }
+        });
     </script>
 </body>
 
