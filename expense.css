@@ -765,7 +765,6 @@ body::after {
         font-size: 15px;
         border: none;
         cursor: pointer;
-        background-color: var(--primary-color) !important;
     }
 
     .view-btn {
