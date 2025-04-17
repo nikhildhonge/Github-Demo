@@ -80,10 +80,11 @@ function setActiveSidebarLink() {
     }
 }
 
-document.getElementById('btn-cancel').addEventListener('click', function (e) { 
-    resetInputs();
+document.getElementById('btn-cancel').addEventListener('click', function (e) {    
+    e.preventDefault();
     const expenseModal = bootstrap.Modal.getInstance(document.getElementById('expense-modal'));
     expenseModal.hide();
+    resetInputs();
 })
 
 document.getElementById('btn-save').addEventListener('click', async function (e) {
