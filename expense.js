@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
         expenseModal.show();
     });
 
+    document.getElementById('btn-print').addEventListener('click', function () {        
+        window.print();
+    });
+
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipTriggerList.forEach(function (tooltipTriggerEl) {
         new bootstrap.Tooltip(tooltipTriggerEl)

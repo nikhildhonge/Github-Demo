@@ -92,14 +92,21 @@
     <!-- Main Content -->
     <main class="main-content" id="mainContent">
         <!-- Page Header -->
-        <div class="page-header">
+        <div class="page-header d-flex justify-content-between align-items-center flex-column flex-sm-row">
             <h1 class="page-title">Expenses</h1>
-
-            <button id="btn-add-receipt" class="add-expense-btn">
-                <i class="fas fa-plus"></i>
-                <span>Add New Expense</span>
-            </button>
+        
+            <div class="header-actions d-flex gap-2">
+                <button id="btn-print" class="print-btn" title="Print">
+                    <i class="fas fa-print"></i>
+                </button>
+        
+                <button id="btn-add-receipt" class="add-expense-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>Add New Expense</span>
+                </button>
+            </div>
         </div>
+        
 
         <!-- Members Table -->
         <div class="table-container">
