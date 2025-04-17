@@ -148,63 +148,57 @@ function renderTable(records) {
             const createdDateFormatted = formatDate(createdDate);
             
             mobileCard.innerHTML = `
-                <td colspan="100%">
-                    <div class="mobile-card">
-                        <!-- Expense Header -->
-                        <div class="card-header">
-                            <span class="card-id">
-                                <i class="fas fa-receipt"></i> Expense No:- ${recordId}
-                            </span>
-                        </div>
-            
-                        <!-- Expense Info -->
-                        <div class="card-field">
-                            <div class="card-field-left">
-                                <i class="far fa-calendar-alt"></i>
-                                <span class='card-cust-label'>Expense Date:</span>
-                            </div>
-                            <div class="card-field-right">${expenseDateFormatted}</div>
-                        </div>
-            
-                        <div class="card-field highlight">
-                            <div class="card-field-left">
-                                <i class="fas fa-rupee-sign"></i>
-                                <span class='card-cust-label'>Amount:</span>
-                            </div>
-                            <div class="card-field-right">₹${expenseAmount}</div>
-                        </div>
-            
-                        <div class="card-field">
-                            <div class="card-field-left">
-                                <i class="fas fa-user"></i>
-                                <span class='card-cust-label'>Expense By:</span>
-                            </div>
-                            <div class="card-field-right">${memberName}</div>
-                        </div>
-            
-                        <div class="card-field">
-                            <div class="card-field-left">
-                                <i class="fas fa-sticky-note"></i>
-                                <span class='card-cust-label'>Note:</span>
-                            </div>
-                            <div class="card-field-right">${expenseNote || '—'}</div>
-                        </div>
-            
-                        <!-- Action Buttons -->
-                        <div class="card-actions">
-                            <button class="btn view-btn" data-id="${recordId}" title="View">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn edit-btn" data-id="${recordId}" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn delete-btn" data-id="${recordId}" title="Delete">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                </td>
-            `;
+  <td colspan="100%">
+    <div class="mobile-card">
+      <div class="card-header">
+        <span class="card-id">
+          <i class="fas fa-receipt"></i> Expense No:- ${recordId}
+        </span>
+      </div>
+
+      <div class="card-field">
+        <div class="card-label">
+          <i class="far fa-calendar-alt"></i> Expense Date:
+        </div>
+        <div class="card-value">${expenseDateFormatted}</div>
+      </div>
+
+      <div class="card-field highlight">
+        <div class="card-label">
+          <i class="fas fa-rupee-sign"></i> Amount:
+        </div>
+        <div class="card-value">₹${expenseAmount}</div>
+      </div>
+
+      <div class="card-field">
+        <div class="card-label">
+          <i class="fas fa-user"></i> Expense By:
+        </div>
+        <div class="card-value">${memberName}</div>
+      </div>
+
+      <div class="card-field">
+        <div class="card-label">
+          <i class="fas fa-sticky-note"></i> Note:
+        </div>
+        <div class="card-value">${expenseNote || '—'}</div>
+      </div>
+
+      <div class="card-actions">
+        <button class="btn view-btn" data-id="${recordId}" title="View">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button class="btn edit-btn" data-id="${recordId}" title="Edit">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn delete-btn" data-id="${recordId}" title="Delete">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>
+  </td>
+`;
+
             tableBody.appendChild(mobileCard);
         } else {
             // Desktop row remains the same

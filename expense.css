@@ -24,6 +24,11 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #e0dede;
@@ -250,6 +255,9 @@ body {
     margin-top: var(--navbar-height);
     padding: 1rem;
     transition: margin-left 0.3s ease;
+    height: 540px;
+    overflow-y: scroll;
+    
 }
 
 .sidebar-open .main-content {
@@ -396,191 +404,96 @@ body {
     
 
     /* Mobile Card Styles */
-    /* Mobile Card Styles */
-.mobile-card {
-    background: #ff855e1c;
-    border-radius: 8px;
-    padding: 10px;
-    border: 1px solid darkorange;
-}
-
-/* Card Header */
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.card-id {
-    font-weight: 600;
-    color: #555;
-    font-size: 10px;
-}
-
-/* Member Name */
-.member-name {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    font-weight: 600;
-    font-size: 16px;
-}
-
-.member-name i {
-    color: #666;
-    margin-right: 8px;
-}
-
-/* Card Field Layout */
-.card-field {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    font-size: 14px;
-    margin-bottom: 8px;
-    color: #444;
-}
-
-.card-field-left {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-}
-
-.card-field i {
-    width: 20px;
-    text-align: center;
-    color: #666;
-    font-size: x-small;
-}
-
-.card-cust-label {
-    font-size: x-small;
-}
-
-.card-field-right {
-    text-align: right;
-    font-weight: 500;
-    padding-left: 8px;
-}
-
-.card-field.highlight .card-field-right {
-    color: #2e7d32;
-    font-weight: 600;
-}
-
-/* Price Summary Table */
-.price-summary {
-    width: 100%;
-    margin: 12px 0;
-    padding: 12px 0;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-}
-
-.price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-}
-
-.price-label {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-}
-
-.price-label i {
-    margin-right: 6px;
-    color: #666;
-    min-width: 20px;
-    text-align: center;
-}
-
-.price-value {
-    font-weight: 500;
-    text-align: right;
-}
-
-.price-row.total {
-    font-weight: 600;
-    font-size: 15px;
-    padding-top: 8px;
-    margin-top: 8px;
-    border-top: 1px solid #eee;
-}
-
-.price-row.total .price-value {
-    color: #2e7d32;
-}
-
-/* Action Buttons */
-.card-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    padding-top: 12px;
-}
-
-.btn {
-        /* height: 36px; */
-        display: flex
-;
+    .mobile-card {
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 12px;
+        padding: 14px;
+        border: 1px solid rgba(255, 165, 0, 0.3);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease;
+    }
+    
+    .mobile-card:hover {
+        transform: scale(1.005);
+    }
+    
+    /* Card Header */
+    .card-header {
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        /* justify-content: center; */
+        margin-bottom: 16px;
+    }
+    
+    .card-id {
+        font-weight: 600;
+        color: #444;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Card Field Layout */
+    .card-field {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 8px 0;
+        border-bottom: 1px dashed #ddd;
+        font-size: 14px;
+    }
+    
+    .card-field:last-child {
+        border-bottom: none;
+    }
+    
+    .card-label {
+        display: flex;
+        align-items: center;
+        color: #666;
+        font-size: 13px;
+        font-weight: 500;
+        gap: 6px;
+    }
+    
+    .card-value {
+        font-weight: 600;
+        color: #333;
+        text-align: right;
+        max-width: 60%;
+    }
+    
+    .card-field.highlight .card-value {
+        color: #2e7d32;
+    }
+    
+    /* Buttons */
+    .card-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        padding-top: 14px;
+    }
+    
+    .btn {
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        font-size: 15px;
         border: none;
         cursor: pointer;
-        transition: all 0.2s;
-}
-
-.table td {
-    padding: 0.75rem;
-    vertical-align: middle;
-    color: var(--dark-text);  
-}
-
-.view-btn { color: #2196F3; }
-.view-btn:hover { background: #e3f2fd; }
-.edit-btn { color: #FF9800; }
-.edit-btn:hover { background: #fff3e0; }
-.delete-btn { color: #F44336; }
-.delete-btn:hover { background: #ffebee; }
-
-.card-actions .btn {
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.card-actions .view-btn {
-    color: var(--accent-color);
-}
-
-.card-actions .view-btn:hover {
-    background: rgba(87, 199, 133, 0.1);
-}
-
-.card-actions .edit-btn {
-    color: var(--primary-color);
-}
-
-.card-actions .edit-btn:hover {
-    background: rgba(214, 127, 28, 0.1);
-}
-
-.card-actions .delete-btn {
-    color: var(--danger-color);
-}
-
-.card-actions .delete-btn:hover {
-    background: rgba(231, 76, 60, 0.1);
-}
+    }
+    
+    .view-btn { color: var(--accent-color); }
+    .view-btn:hover { background: rgba(87, 199, 133, 0.1); }
+    
+    .edit-btn { color: var(--primary-color); }
+    .edit-btn:hover { background: rgba(214, 127, 28, 0.1); }
+    
+    .delete-btn { color: var(--danger-color); }
+    .delete-btn:hover { background: rgba(231, 76, 60, 0.1); }
+    
 }
 
 
@@ -735,6 +648,8 @@ body {
 
     .main-content {
         padding: 1.5rem;
+        height: 540px;
+        overflow-y: scroll;
     }
 }
 
@@ -750,6 +665,8 @@ body {
 
     .main-content {
         margin-left: var(--sidebar-width);
+        height: 600px;
+        overflow-y: scroll;
     }
 
     .sidebar-toggle {
