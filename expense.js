@@ -34,11 +34,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Show modal for adding new receipt
     document.getElementById('btn-add-receipt').addEventListener('click', function () {
-        document.getElementById('modal-title').textContent = 'Add New Receipt';
-        document.getElementById('btn-save').textContent = 'Save Receipt';
         document.getElementById('edit-expense-id').value = '';
         expenseModal.show();
     });
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+      new bootstrap.Tooltip(tooltipTriggerEl)
+    })
 
     // Set active sidebar link based on current page
     setActiveSidebarLink();
@@ -76,6 +79,12 @@ function setActiveSidebarLink() {
             break;
     }
 }
+
+document.getElementById('btn-cancel').addEventListener('click', function (e) { 
+    resetInputs();
+    const expenseModal = bootstrap.Modal.getInstance(document.getElementById('expense-modal'));
+    expenseModal.hide();
+})
 
 document.getElementById('btn-save').addEventListener('click', async function (e) {
     e.preventDefault();
@@ -143,7 +152,7 @@ function renderTable(records) {
                         <!-- Expense Header -->
                         <div class="card-header">
                             <span class="card-id">
-                                <i class="fas fa-receipt"></i> Expense No. #: ${recordId}
+                                <i class="fas fa-receipt"></i> Expense No:- ${recordId}
                             </span>
                         </div>
             
@@ -585,6 +594,8 @@ async function searchMembers(searchTerm) {
                         option.setAttribute('data-id', record.memberid);
                         datalist.appendChild(option);
                     });
+                } else {
+                    alert('Members not found with this name!');
                 }
                 hideLoader();
             })

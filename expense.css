@@ -39,7 +39,7 @@ body {
     background-position: center center;
     background-size: 300px;
     background-attachment: fixed;
-    opacity: 1;
+    opacity: 0.9;
 }
 
 /* Navbar Styles */
@@ -73,35 +73,59 @@ body {
 
 .logo-container {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    gap: 12px;
+    transition: all 0.3s ease-in-out;
+    max-width: 100%;
+    flex-wrap: wrap;
 }
 
 .logo-img {
-    height: 40px;
+    height: 48px;
     width: auto;
-    margin-right: 0.5rem;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.logo-container:hover .logo-img {
+    transform: scale(1.05);
 }
 
 .logo-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
 }
 
 .logo-text .main-heading {
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff8e7;
     margin: 0;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 .logo-text .subheading {
-    font-size: 0.65rem;
-    font-weight: 400;
-    color: #f0f0f0;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #fcecc3;
     margin: 0;
+    opacity: 0.85;
+    letter-spacing: 0.3px;
     line-height: 1.2;
-    display: none;
+    transition: all 0.3s ease;
+}
+
+.logo-container:hover .subheading {
+    opacity: 1;
+}
+
+@keyframes fadeInLogo {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.logo-container {
+    animation: fadeInLogo 0.8s ease-out;
 }
 
 .sidebar-toggle,
@@ -116,6 +140,26 @@ body {
     color: white;
     cursor: pointer;
     flex-shrink: 0;
+}
+
+@media (max-width: 576px) {
+    .logo-container {
+        align-items: center;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .logo-img {
+        height: 40px;
+    }
+
+    .logo-text .main-heading {
+        font-size: 1rem;
+    }
+
+    .logo-text .subheading {
+        font-size: 0.6rem;
+    }
 }
 
 .sidebar-toggle:hover,
@@ -286,7 +330,7 @@ body {
 .table td {
     padding: 0.75rem;
     vertical-align: middle;
-    color: var(--dark-text)
+    color: var(--dark-text);
 }
 
 .mobile-card:hover,
@@ -345,6 +389,7 @@ body {
     .table tbody td {
         display: block;
         width: 100%;
+        font-weight: 900;
     }
 
     
@@ -355,10 +400,8 @@ body {
 .mobile-card {
     background: #ff855e1c;
     border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border: 1px solid darkorange;
 }
 
 /* Card Header */
@@ -409,7 +452,6 @@ body {
     width: 20px;
     text-align: center;
     color: #666;
-    margin-right: 4px;
     font-size: x-small;
 }
 
@@ -483,13 +525,20 @@ body {
 }
 
 .btn {
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
+        /* height: 36px; */
+        display: flex
+;
+        align-items: center;
+        /* justify-content: center; */
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+}
+
+.table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    color: var(--dark-text);  
 }
 
 .view-btn { color: #2196F3; }
@@ -571,6 +620,7 @@ body {
     color: #6c757d;
     font-size: 0.75rem;
     margin: 0;
+    color: var(--primary-color);
 }
 
 /* Loader styles */
@@ -614,12 +664,57 @@ body {
 }
 
 /* Modal styles */
-.modal-header {
-    border-bottom-color: #eee;
-}
-
 .modal-title {
     color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.modal-content {
+    border-radius: 10px;
+    animation: slideInUp 0.3s ease;
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-body label.form-label {
+    color: #333;
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
+}
+
+.modal-body .form-control {
+    border: 1px solid #ddd;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+.modal-body .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(255, 140, 66, 0.15);
+    background-color: #fffaf5;
+}
+
+.modal-body textarea.form-control {
+    resize: vertical;
+}
+
+.modal-footer .btn {
+    font-weight: 500;
+    border-radius: 6px;
+    transition: background 0.2s ease;
 }
 
 .form-control:focus,
