@@ -143,7 +143,7 @@ function renderTable(records) {
                         <!-- Expense Header -->
                         <div class="card-header">
                             <span class="card-id">
-                                <i class="fas fa-receipt"></i> Receipt #: ${recordId}
+                                <i class="fas fa-receipt"></i> Expense No. #: ${recordId}
                             </span>
                         </div>
             
@@ -151,7 +151,7 @@ function renderTable(records) {
                         <div class="card-field">
                             <div class="card-field-left">
                                 <i class="far fa-calendar-alt"></i>
-                                <span>Expense Date:</span>
+                                <span class='card-cust-label'>Expense Date:</span>
                             </div>
                             <div class="card-field-right">${expenseDateFormatted}</div>
                         </div>
@@ -159,7 +159,7 @@ function renderTable(records) {
                         <div class="card-field highlight">
                             <div class="card-field-left">
                                 <i class="fas fa-rupee-sign"></i>
-                                <span>Amount:</span>
+                                <span class='card-cust-label'>Amount:</span>
                             </div>
                             <div class="card-field-right">₹${expenseAmount}</div>
                         </div>
@@ -167,7 +167,7 @@ function renderTable(records) {
                         <div class="card-field">
                             <div class="card-field-left">
                                 <i class="fas fa-user"></i>
-                                <span>Expense By:</span>
+                                <span class='card-cust-label'>Expense By:</span>
                             </div>
                             <div class="card-field-right">${memberName}</div>
                         </div>
@@ -175,7 +175,7 @@ function renderTable(records) {
                         <div class="card-field">
                             <div class="card-field-left">
                                 <i class="fas fa-sticky-note"></i>
-                                <span>Note:</span>
+                                <span class='card-cust-label'>Note:</span>
                             </div>
                             <div class="card-field-right">${expenseNote || '—'}</div>
                         </div>
