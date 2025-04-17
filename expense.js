@@ -271,6 +271,7 @@ async function deleteRecord(expenseId) {
                 'Content-Type': 'application/json'
             }
         });
+        resetInputs();
         await loadExpenses();
     } catch (error) {
         hideLoader();
