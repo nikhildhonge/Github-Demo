@@ -31,7 +31,9 @@
                     <i class="fas fa-bars"></i>
                 </div>
                 <div class="logo-container">
-                    <img src="Hanumanji.png" alt="Logo" class="logo-img">
+                    <div class="logo-glow-wrapper">
+                        <img src="Hanumanji.png" alt="Logo" class="logo-img">
+                    </div>
                     <div class="logo-text">
                         <div class="main-heading">जय हनुमान चॅरिटेबल ट्रस्ट</div>
                         <div class="subheading">म्हसाळा, वर्धा, नोंदणी क्र. - ई - ५२९/०१७ (वर्धा)</div>
@@ -90,12 +92,10 @@
     <!-- Main Content -->
     <main class="main-content" id="mainContent">
         <!-- Page Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4 flex-column flex-sm-row">
+        <div class="page-header">
             <h1 class="page-title">Expenses</h1>
 
-            <button id="btn-add-receipt"
-                class="btn btn-primary d-flex align-items-center gap-2"
-                style="font-weight: 500; font-size: 10px;">
+            <button id="btn-add-receipt" class="add-expense-btn">
                 <i class="fas fa-plus"></i>
                 <span>Add New Expense</span>
             </button>
@@ -127,75 +127,90 @@
     <footer class="footer">
         <div class="container-fluid">
             <div class="footer-links">
+                <!-- Optional links -->
+                <!-- <a href="#" class="footer-link">Privacy Policy</a>
+            <a href="#" class="footer-link">Terms</a> -->
             </div>
-            <p class="copyright">&copy; जय हनुमान चॅरिटेबल ट्रस्ट </p>
+            <p class="copyright">
+                &copy; जय हनुमान चॅरिटेबल ट्रस्ट
+            </p>
         </div>
     </footer>
 
+
     <!-- Expense Modal -->
-<div class="modal fade" id="expense-modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content shadow-lg">
-            <div class="modal-header bg-light border-bottom">
-                <h5 class="modal-title" id="modal-title">Add New Expense</h5>
-                <button type="button" class="btn-close" id="btn-cancel" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body px-4 py-3">
-                <form id="memberForm">
-                    <div class="row g-3">
-                        <!-- Expense Date -->
-                        <div class="col-md-6 position-relative">
-                            <label for="expense-date" class="form-label fw-semibold">
-                                <i class="bi bi-calendar-date me-1 text-primary" data-bs-toggle="tooltip" title="Select the date of the expense"></i>
-                                Expense Date ( खर्च दिनांक )
-                            </label>
-                            <input type="date" class="form-control shadow-sm" id="expense-date" required>
+    <div class="modal fade" id="expense-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header bg-light border-bottom">
+                    <h5 class="modal-title" id="modal-title">Add New Expense</h5>
+                    <button type="button" class="btn-close" id="btn-cancel" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-4 py-3">
+                    <form id="memberForm">
+                        <div class="row g-3">
+                            <!-- Expense Date -->
+                            <div class="col-md-6 position-relative">
+                                <label for="expense-date" class="form-label fw-semibold">
+                                    <i class="bi bi-calendar-date me-1 text-primary" data-bs-toggle="tooltip"
+                                        title="Select the date of the expense"></i>
+                                    Expense Date ( खर्च दिनांक )
+                                </label>
+                                <input type="date" class="form-control shadow-sm" id="expense-date" required>
+                            </div>
+
+                            <!-- Expense Amount -->
+                            <div class="col-md-6 position-relative">
+                                <label for="expense-amount" class="form-label fw-semibold">
+                                    <i class="bi bi-currency-rupee me-1 text-success" data-bs-toggle="tooltip"
+                                        title="Enter the total expense amount"></i>
+                                    Expense Amount ( खर्च रक्कम )
+                                </label>
+                                <input type="number" class="form-control shadow-sm" id="expense-amount" required>
+                            </div>
+
+                            <!-- Member Name -->
+                            <div class="col-12 position-relative">
+                                <label for="expense-member-name" class="form-label fw-semibold">
+                                    <i class="bi bi-person-circle me-1 text-info" data-bs-toggle="tooltip"
+                                        title="Enter or search for the member's name"></i>
+                                    Name ( नाव )
+                                </label>
+                                <input type="text" class="form-control shadow-sm" id="expense-member-name"
+                                    list="members-list" autocomplete="off" required
+                                    placeholder="Start typing to search members...">
+                                <datalist id="members-list">
+                                    <!-- Options loaded dynamically -->
+                                </datalist>
+                                <input type="hidden" id="expense-member-id" value="">
+                            </div>
+
+                            <!-- Expense Note -->
+                            <div class="col-12 position-relative">
+                                <label for="expense-note" class="form-label fw-semibold">
+                                    <i class="bi bi-journal-text me-1 text-warning" data-bs-toggle="tooltip"
+                                        title="Add a short note or purpose of the expense"></i>
+                                    Expense Note ( खर्चाची नोंद )
+                                </label>
+                                <textarea class="form-control shadow-sm" id="expense-note" rows="3" required></textarea>
+                            </div>
+
+                            <input type="hidden" id="edit-expense-id" value="">
                         </div>
 
-                        <!-- Expense Amount -->
-                        <div class="col-md-6 position-relative">
-                            <label for="expense-amount" class="form-label fw-semibold">
-                                <i class="bi bi-currency-rupee me-1 text-success" data-bs-toggle="tooltip" title="Enter the total expense amount"></i>
-                                Expense Amount ( खर्च रक्कम )
-                            </label>
-                            <input type="number" class="form-control shadow-sm" id="expense-amount" required>
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-secondary px-4"
+                                style="font-size: 12px;height: 30px;" data-bs-dismiss="modal"
+                                id="btn-cancel">Cancel</button>
+                            <button type="button" class="btn btn-primary px-4" style="font-size: 12px;height: 30px;"
+                                id="btn-save">Save Expense</button>
                         </div>
-
-                        <!-- Member Name -->
-                        <div class="col-12 position-relative">
-                            <label for="expense-member-name" class="form-label fw-semibold">
-                                <i class="bi bi-person-circle me-1 text-info" data-bs-toggle="tooltip" title="Enter or search for the member's name"></i>
-                                Name ( नाव )
-                            </label>
-                            <input type="text" class="form-control shadow-sm" id="expense-member-name" list="members-list"
-                                autocomplete="off" required placeholder="Start typing to search members...">
-                            <datalist id="members-list">
-                                <!-- Options loaded dynamically -->
-                            </datalist>
-                            <input type="hidden" id="expense-member-id" value="">
-                        </div>
-
-                        <!-- Expense Note -->
-                        <div class="col-12 position-relative">
-                            <label for="expense-note" class="form-label fw-semibold">
-                                <i class="bi bi-journal-text me-1 text-warning" data-bs-toggle="tooltip" title="Add a short note or purpose of the expense"></i>
-                                Expense Note ( खर्चाची नोंद )
-                            </label>
-                            <textarea class="form-control shadow-sm" id="expense-note" rows="3" required></textarea>
-                        </div>
-
-                        <input type="hidden" id="edit-expense-id" value="">
-                    </div>
-
-                    <div class="d-flex justify-content-end gap-2 mt-4">
-                        <button type="button" class="btn btn-outline-secondary px-4" style="font-size: 12px;height: 30px;" data-bs-dismiss="modal" id="btn-cancel">Cancel</button>
-                        <button type="button" class="btn btn-primary px-4" style="font-size: 12px;height: 30px;" id="btn-save">Save Expense</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <!-- Bootstrap Bundle with Popper -->

@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-      new bootstrap.Tooltip(tooltipTriggerEl)
+        new bootstrap.Tooltip(tooltipTriggerEl)
     })
 
     // Set active sidebar link based on current page
@@ -80,7 +80,7 @@ function setActiveSidebarLink() {
     }
 }
 
-document.getElementById('btn-cancel').addEventListener('click', function (e) {    
+document.getElementById('btn-cancel').addEventListener('click', function (e) {
     e.preventDefault();
     const expenseModal = bootstrap.Modal.getInstance(document.getElementById('expense-modal'));
     expenseModal.hide();
@@ -94,11 +94,11 @@ document.getElementById('btn-save').addEventListener('click', async function (e)
     const expenseId = document.getElementById('edit-expense-id').value;
 
     if (validateReceiptForm()) {
-        if(expenseId) {
+        if (expenseId) {
             await updateExpense();
         } else {
             await createExpense();
-        }        
+        }
         resetInputs();
         await loadExpenses();
         const expenseModal = bootstrap.Modal.getInstance(document.getElementById('expense-modal'));
@@ -146,7 +146,7 @@ function renderTable(records) {
             const mobileCard = document.createElement('tr');
             const expenseDateFormatted = formatDate(expenseDate);
             const createdDateFormatted = formatDate(createdDate);
-            
+
             mobileCard.innerHTML = `
   <td colspan="100%">
     <div class="mobile-card">
@@ -263,7 +263,7 @@ async function deleteRecord(expenseId) {
     showLoader();
     const expenseData = {
         action: 'deleteexpense',
-        expense_id: expenseId        
+        expense_id: expenseId
     };
 
     try {
@@ -286,7 +286,7 @@ async function deleteRecord(expenseId) {
 function editRecord(expenseId, action) {
     removeDisabledAttribute();
     const expense = expenses.find(record => record.expense_id === expenseId);
-    if(expense) {
+    if (expense) {
         document.getElementById('edit-expense-id').value = expense.expense_id;
         document.getElementById('expense-date').value = new Date(expense.expense_date).toISOString().split('T')[0];
         document.getElementById('expense-member-name').value = expense.member_name;
@@ -294,7 +294,7 @@ function editRecord(expenseId, action) {
         document.getElementById('expense-amount').value = expense.expense_amount;
         document.getElementById('expense-note').value = expense.expense_note;
 
-        if(action === 'view') {
+        if (action === 'view') {
             disableModalInputs();
         }
 
@@ -320,7 +320,7 @@ function disableModalInputs() {
 }
 
 function formatDate(dateInput) {
-    const date = new Date(dateInput);   
+    const date = new Date(dateInput);
     return date.toLocaleDateString("en-IN");
 }
 
@@ -368,7 +368,7 @@ async function updateExpense() {
 
     const expenseId = document.getElementById('edit-expense-id').value;
 
-    if(expenseId) {
+    if (expenseId) {
         const expenseData = {
             action: 'updateexpense',
             expense_id: expenseId,
@@ -379,7 +379,7 @@ async function updateExpense() {
             expense_note: String(document.getElementById('expense-note').value).trim(),
             updated_date: updatedDate
         };
-    
+
         try {
             const response = await fetch(scriptUrl + '?sheet=Expenses', {
                 method: 'POST',
@@ -393,9 +393,9 @@ async function updateExpense() {
             hideLoader();
             console.error('Error saving receipt:', error);
         }
-    }else {
+    } else {
 
-    }    
+    }
 }
 
 
@@ -427,7 +427,7 @@ function validateReceiptForm() {
         expenseDateinput.setCustomValidity('Expense date cannot be in the future');
         expenseDateinput.reportValidity();
         return false;
-    } 
+    }
 
     // Validate expected amount
     if (!expectedAmountInput.value.trim()) {
@@ -449,8 +449,8 @@ function validateReceiptForm() {
         return false;
     }
 
-     // Validate member name is selected (and member ID is set)
-     if (!memberNameInput.value.trim()) {
+    // Validate member name is selected (and member ID is set)
+    if (!memberNameInput.value.trim()) {
         memberNameInput.setCustomValidity('Please select a member');
         memberNameInput.reportValidity();
         return false;
