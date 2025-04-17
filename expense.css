@@ -12,7 +12,7 @@
 }
 
 body {
-    font-family: 'Bahnschrift', sans-serif;
+    font-family: 'Bahnschrift', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background-color: #e0dede;
     margin: 0;
     padding: 0;
