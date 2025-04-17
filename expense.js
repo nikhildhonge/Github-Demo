@@ -419,7 +419,7 @@ function validateReceiptForm() {
     const todayDate = today.toISOString().split('T')[0]; //
     const expenseDate = new Date(expenseDateinput.value).toISOString().split('T')[0]; // e.g., "2025-04-16"
 
-    if (expenseDate >= todayDate) {  // Future dates are invalid
+    if (expenseDate > todayDate) {  // Future dates are invalid
         expenseDateinput.setCustomValidity('Expense date cannot be in the future');
         expenseDateinput.reportValidity();
         return false;
