@@ -38,14 +38,209 @@ document.addEventListener('DOMContentLoaded', function () {
         expenseModal.show();
     });
 
-    document.getElementById('btn-print').addEventListener('click', function () {        
-        window.print();
+    document.getElementById('btn-print').addEventListener('click', function () {
+        document.getElementById('yearSelectionForm').reset();
     });
+
+    // Confirm print button handler
+    document.getElementById('btn-print-confirm').addEventListener('click', function () {
+        const selectedYear = yearSelect.value;
+
+        if (!selectedYear) {
+            alert('Please select a year first');
+            return;
+        }
+
+        // Filter records
+        const filteredRecords = filterRecordsByYear(expenses, selectedYear);
+
+        // Close the modal
+        bootstrap.Modal.getInstance(document.getElementById('print-year-modal')).hide();
+
+        // Print the filtered records
+        printFilteredRecords(filteredRecords, selectedYear);
+    });
+
+    function printFilteredRecords(records, selectedYear) {
+        // Create a new window for printing
+        const printWindow = window.open('', '_blank');
+
+        // Get current date for the report
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString('en-IN', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+
+        // Prepare the HTML content
+        let htmlContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Expense Report - ${selectedYear}</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                    color: #333;
+                }
+                .header {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    border-bottom: 2px solid #333;
+                    padding-bottom: 10px;
+                }
+                .report-title {
+                    font-size: 22px;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+                .report-subtitle {
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                }
+                .report-meta {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 15px;
+                    font-size: 14px;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+                th {
+                    background-color: #f2f2f2;
+                    text-align: left;
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                }
+                td {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                }
+                tr:nth-child(even) {
+                    background-color: #f9f9f9;
+                }
+                .footer {
+                    margin-top: 30px;
+                    text-align: right;
+                    font-size: 12px;
+                    border-top: 1px solid #ddd;
+                    padding-top: 10px;
+                }
+                @media print {
+                    body {
+                        margin: 0;
+                        padding: 10px;
+                    }
+                    .no-print {
+                        display: none;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <div class="report-title">Expense Report</div>
+                <div class="report-subtitle">Year: ${selectedYear}</div>
+            </div>
+            
+            <div class="report-meta">
+                <div>Generated on: ${formattedDate}</div>
+                <div>Total Records: ${records.length}</div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Expense Date</th>
+                        <th>Member Name</th>
+                        <th>Amount (₹)</th>
+                        <th>Note</th>
+                        <th>Created Date</th>
+                        <th>Updated Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        // Add table rows for each record
+        records.forEach((record, index) => {
+            const expenseDate = new Date(record.expense_date).toLocaleDateString('en-IN');
+            const createdDate = new Date(record.created_date).toLocaleDateString('en-IN');
+            const updatedDate = new Date(record.updated_date).toLocaleDateString('en-IN');
+
+            htmlContent += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${expenseDate}</td>
+                    <td>${record.member_name}</td>
+                    <td>${record.expense_amount.toLocaleString('en-IN')}</td>
+                    <td>${record.expense_note || '-'}</td>
+                    <td>${createdDate}</td>
+                    <td>${updatedDate}</td>
+                </tr>
+            `;
+        });
+
+        // Add footer with page number
+        htmlContent += `
+                </tbody>
+            </table>
+            
+            <div class="footer">
+                Page 1 of 1 | Printed on ${formattedDate}
+            </div>
+            
+            <div class="no-print" style="margin-top: 20px; text-align: center;">
+                <button onclick="window.print()" style="padding: 8px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Print Report
+                </button>
+                <button onclick="window.close()" style="padding: 8px 15px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">
+                    Close Window
+                </button>
+            </div>
+            
+            <script>
+                // Automatically trigger print dialog when page loads
+                window.onload = function() {
+                    setTimeout(function() {
+                        window.print();
+                    }, 500);
+                };
+            </script>
+        </body>
+        </html>
+        `;
+
+        // Write the content to the new window
+        printWindow.document.open();
+        printWindow.document.write(htmlContent);
+        printWindow.document.close();
+    }
 
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipTriggerList.forEach(function (tooltipTriggerEl) {
         new bootstrap.Tooltip(tooltipTriggerEl)
     })
+
+    // Get the current year to dynamically populate year options
+    const currentYear = new Date().getFullYear();
+    const yearSelect = document.getElementById('year-select');
+
+    // Clear existing options and add dynamic ones
+    yearSelect.innerHTML = `
+         <option value="" selected disabled>-- Select Year --</option>
+         <option value="${currentYear - 1}">${currentYear - 1}</option>
+         <option value="${currentYear}">${currentYear}</option>
+         <option value="${currentYear + 1}">${currentYear + 1}</option>
+     `;
 
     // Set active sidebar link based on current page
     setActiveSidebarLink();
@@ -121,6 +316,12 @@ async function loadExpenses() {
                 expenses = data.records;
                 const sortedRecords = sortRecords(expenses, currentSort.field, currentSort.direction);
                 renderTable(sortedRecords);
+                const records2024_2025 = filterRecordsByYear(expenses, '2025');
+
+                // Get records for 2023-2024
+                const records2023_2024 = filterRecordsByYear(expenses, '2024');
+                console.log('records2024_2025--', records2024_2025.length);
+                console.log('records2023_2024--', records2023_2024.length);
             }
             hideLoader();
         })
@@ -145,6 +346,7 @@ function renderTable(records) {
         const expenseDate = new Date(record.expense_date) || '';
         const expenseNote = record.expense_note || '';
         const createdDate = new Date(record.created_date) || '';
+        const updatedDate = record.updated_date == null ? new Date(record.created_date) : new Date(record.updated_date);
 
         if (isMobile) {
             const mobileCard = document.createElement('tr');
@@ -212,7 +414,8 @@ function renderTable(records) {
         <td>₹${expenseAmount}</td>
         <td>${memberName}</td>
         <td>${expenseNote}</td>
-         <td>${formatDate(createdDate)}</td>
+        <td>${formatDate(createdDate)}</td>
+        <td>${formatDate(updatedDate)}</td>
         <td class="text-end">
             <div class="d-flex justify-content-end gap-2">
               <button class="action-btn view-btn" title="View" data-id="${recordId}">
@@ -343,7 +546,8 @@ async function createExpense() {
         expense_amount: parseFloat(parseFloat(document.getElementById('expense-amount').value).toFixed(2)),
         expense_date: document.getElementById('expense-date').value,
         expense_note: String(document.getElementById('expense-note').value).trim(),
-        created_date: dateString2
+        created_date: dateString2,
+        updated_date: dateString2
     };
 
     try {
@@ -496,7 +700,7 @@ function generateExpenseId() {
 
 // Add this at the beginning of your script section
 let currentSort = {
-    field: 'cdate',
+    field: 'udate',
     direction: 'desc'
 };
 
@@ -523,9 +727,13 @@ function sortRecords(records, field, direction) {
                 valueB = b.expense_note?.toLowerCase() || '';
                 break;
             case 'cdate':
-            default:
                 valueA = a.created_date || 0;
                 valueB = b.created_date || 0;
+                break;
+            case 'udate':
+            default:
+                valueA = a.updated_date || 0;
+                valueB = b.updated_date || 0;
                 break;
         }
 
@@ -619,3 +827,29 @@ expenseMemberNameInput.addEventListener('change', async function () {
         document.getElementById('expense-member-id').value = selectedOption.getAttribute('data-id');
     }
 });
+
+function filterRecordsByYear(records, yearRange) {
+    // Get current date to determine the current year
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+
+    // Parse the year range input
+    let startYear, endYear;
+    if (yearRange.includes('-')) {
+        [startYear, endYear] = yearRange.split('-').map(Number);
+    } else {
+        // If single year provided, use that year only
+        startYear = endYear = parseInt(yearRange);
+    }
+
+    // Filter the records
+    return records.filter(record => {
+        if (!record.updated_date) return false;
+
+        const updatedDate = new Date(record.updated_date);
+        const recordYear = updatedDate.getFullYear();
+
+        // Check if record falls within the specified year range
+        return recordYear >= startYear && recordYear <= endYear;
+    });
+}

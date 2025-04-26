@@ -83,7 +83,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="expense.html" id="expense-link">
-                    <i class="fas fa-envelope me-2"></i> Expenses
+                    <i class="fas fa-credit-card me-2"></i> Expenses
                 </a>
             </li>
         </ul>
@@ -94,38 +94,41 @@
         <!-- Page Header -->
         <div class="page-header d-flex justify-content-between align-items-center flex-column flex-sm-row">
             <h1 class="page-title">Expenses</h1>
-        
+
             <div class="header-actions d-flex gap-2">
                 <button id="btn-print" class="print-btn" title="Print">
-                    <i class="fas fa-print"></i>
+                    <i class="fas fa-print" data-bs-toggle="modal" data-bs-target="#print-year-modal"></i>
                 </button>
-        
-                <button id="btn-add-receipt" class="add-expense-btn">
+
+                <button id="btn-add-receipt" class="add-expense-btn" title="Add New Expense">
                     <i class="fas fa-plus"></i>
                     <span>Add New Expense</span>
                 </button>
             </div>
         </div>
-        
+
 
         <!-- Members Table -->
         <div class="table-container">
             <div class="table-responsive">
-                <table class="table table-hover" id="members-table">
-                    <thead>
-                        <tr>
-                            <th class="sortable" data-sort="date">Expense Date <i class="fas fa-sort"></i></th>
-                            <th class="sortable" data-sort="amount">Expense Amount <i class="fas fa-sort"></i></th>
-                            <th class="sortable" data-sort="name">Expense By <i class="fas fa-sort"></i></th>
-                            <th class="sortable" data-sort="note">Expense Note <i class="fas fa-sort"></i></th>
-                            <th class="sortable" data-sort="cdate">Created Date <i class="fas fa-sort"></i></th>
-                            <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="members-tbody">
-                        <!-- Dynamic content will be inserted here -->
-                    </tbody>
-                </table>
+                <div class="scrollable-table">
+                    <table class="table table-hover table-striped" id="members-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="date">Expense Date <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="amount">Expense Amount <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="name">Expense By <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="note">Expense Note <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="cdate">Created Date <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-sort="udate">Updated Date <i class="fas fa-sort"></i></th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="members-tbody">
+                            <!-- Dynamic content will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
@@ -218,6 +221,47 @@
             </div>
         </div>
     </div>
+
+    <!-- Print Year Selection Modal -->
+    <div class="modal fade" id="print-year-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header bg-light border-bottom">
+                    <h5 class="modal-title" id="print-modal-title">Select Year to Print</h5>
+                    <button type="button" class="btn-close" id="btn-print-cancel" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-4 py-3">
+                    <form id="yearSelectionForm">
+                        <div class="row g-3">
+                            <!-- Year Selection Dropdown -->
+                            <div class="col-12 position-relative">
+                                <label for="year-select" class="form-label fw-semibold">
+                                    <i class="bi bi-calendar me-1 text-primary" data-bs-toggle="tooltip"
+                                        title="Select year to filter records"></i>
+                                    Select Year (वर्ष निवडा)
+                                </label>
+                                <select class="form-select shadow-sm" id="year-select" required>
+                                    <option value="" selected disabled>-- Select Year --</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <button type="button" class="btn btn-outline-secondary px-4"
+                                style="font-size: 12px;height: 30px;" data-bs-dismiss="modal"
+                                id="btn-print-cancel">Cancel</button>
+                            <button type="button" class="btn btn-primary px-4" style="font-size: 12px;height: 30px;"
+                                id="btn-print-confirm">Print Records</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Icon (Add this where you want the print button) -->
+    <i class="bi bi-printer-fill print-icon" id="print-records-btn" title="Print Records"></i>
 
 
     <!-- Bootstrap Bundle with Popper -->
